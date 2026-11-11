@@ -4,31 +4,32 @@ description: "Use em toda requisição de trabalho (skill padrão editável). Es
 version: 0.3.0
 author: <autor>, Hermes Agent
 license: MIT
-platforms: [linux]
+platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [roteamento, skills, catalogo, padrao, editavel]
-    default: true     # padrão: ativa em toda requisição (skills.auto_load)
+    default: true     # padrão: pode rodar em toda requisição (opcional; ver adaptar-ao-usuario.md, fase 5)
     editable: true    # template: adapte às skills que o usuário instalou
     related_skills: [using-n8n-mcp-skills, composio-apps]
 ---
 
 # Akmon — roteador de skills (padrão da sessão)
 
-Esta skill vem pré-carregada em toda sessão (`skills.auto_load`). Todo pedido de trabalho do operador
-passa por ela: escolher **a skill ideal**, anunciar em uma linha, carregar e executar seguindo a
-skill. O índice de skills do system prompt diz o que existe; esta skill resolve **qual delas** quando
+Quando o usuário ativa o modo padrão, esta skill roda em toda requisição (Hermes: `skills.auto_load`;
+Claude Code, Codex e Antigravity: bloco no arquivo de instruções). Todo pedido de trabalho passa por ela: escolher **a skill ideal**, anunciar em uma linha, carregar e executar seguindo a
+skill. A lista de skills do harness diz o que existe; esta skill resolve **qual delas** quando
 há várias parecidas (20 de n8n, 3 de Composio, 2 de runtime de agente...) e em que **ordem** elas se
 encadeiam. O mapa completo, com o que cada skill faz e quando chamar, está em `references/mapa.md`.
 
 ## Padrão editável (adapte ao usuário)
 
-Skill **padrão**: ativa em toda requisição, via `skills.auto_load`. E **editável**: as tabelas abaixo
-cobrem o catálogo inteiro da biblioteca, mas cada pessoa instala só parte dele. Na primeira vez, ou
-quando skills forem instaladas/removidas, siga `references/adaptar-ao-usuario.md`: entender o estilo
-de trabalho, escolher as skills que fazem sentido, instalar com o OK do usuário e podar este arquivo
-e o mapa para citar só o que está instalado. Enquanto não adaptada, skill citada aqui que não consta
-no índice de skills do system prompt **não existe** nesta instalação: não a carregue nem a invente.
+Skill **padrão**: pode ficar ativa em toda requisição, se o usuário optar (bloco no arquivo de
+instruções do harness; no Hermes, também `skills.auto_load`). E **editável**: as tabelas abaixo cobrem o
+catálogo inteiro da biblioteca, mas cada pessoa instala só parte dele. Na primeira vez, ou quando
+skills forem instaladas/removidas, siga `references/adaptar-ao-usuario.md`: entrevistar o usuário,
+escolher as skills que fazem sentido, instalar com o OK dele, decidir se o akmon roda em toda
+requisição e podar este arquivo e o mapa para citar só o que está instalado. Enquanto não adaptada, skill citada aqui que não consta
+na lista de skills do harness **não existe** nesta instalação: não a carregue nem a invente.
 
 ## When to Use
 
@@ -47,23 +48,25 @@ no índice de skills do system prompt **não existe** nesta instalação: não a
    - **Verbo:** criar, corrigir, revisar/auditar, investigar, operar servidor, publicar, pesquisar.
    - **Estado:** produção (cliente real) ou novo/laboratório. Produção puxa as skills com gates
      (`n8n-correcao-producao`, `infra-vps-producao`, `n8n-servidor-vps`).
-2. **Escolher UMA principal** pela tabela de desambiguação e pela rota por intenção abaixo + índice do system prompt, só entre
+2. **Escolher UMA principal** pela tabela de desambiguação e pela rota por intenção abaixo + lista de skills do harness, só entre
    skills instaladas. Empate:
    a mais específica (a que cita o sistema pelo nome) vence. No máximo 2 de apoio.
 3. **Anunciar em uma linha**, sem narrar:
    `Skill: <principal> (apoio: <x>) — <motivo em até 12 palavras>.`
-4. **Carregar e executar:** `skill_view(name="<principal>")`; apoio só no passo que precisar. A
+4. **Carregar e executar:** abra a skill pelo mecanismo do harness (ferramenta de skills, `/<nome>` ou
+   leitura direta do `SKILL.md`); apoio só no passo que precisar. A
    skill escolhida manda a partir daqui, gates inclusos.
 5. **Nenhuma serve:** `Nenhuma skill cobre isso — sigo sem skill.` e executa. Se sair procedimento
    reutilizável, propor skill no fim.
 
 ### Modo completo (dúvida real, ou chamada explícita "akmon")
 
-1. `terminal(command="python3 <pasta-da-skill>/scripts/checar_mapa.py")` —
-   `NAO MAPEADA` = skill nova: leia com `skill_view` e inclua a linha em `references/mapa.md`.
-2. `skill_view(name="akmon", file_path="references/mapa.md")` e decida com o mapa.
+1. Rode `python3 <pasta-da-skill>/scripts/checar_mapa.py` (sem argumento, ele procura nas pastas de
+   skills conhecidas). `NAO MAPEADA` = skill nova: leia o `SKILL.md` dela e inclua a linha em
+   `references/mapa.md`.
+2. Leia `references/mapa.md` e decida com o mapa.
 3. Se a escolha muda o resultado e o pedido não decide ("arruma o fluxo" sem dizer criar ou
-   corrigir, ou sem instância): UMA pergunta via `clarify`. Ambiguidade que não muda o resultado:
+   corrigir, ou sem instância): UMA pergunta ao usuário (ferramenta de perguntas do harness, ou texto). Ambiguidade que não muda o resultado:
    decida sozinho.
 4. Siga os passos 3–5 do modo rápido.
 
@@ -149,17 +152,17 @@ Fora da Desambiguação acima: uma linha por área, com todas as skills dela. O 
 
 - **Esta skill é injetada em toda sessão** — cada byte aqui custa em todo turno. Detalhe novo vai
   para `references/mapa.md`, não para este arquivo.
-- **Mudança aqui só vale na próxima sessão** (o auto_load é lido uma vez por sessão, para não
-  quebrar o cache de prompt).
+- **Mudança aqui só vale na próxima sessão** (harnesses leem skills e instruções uma vez por sessão, e
+  recarregar no meio quebraria o cache de prompt).
 - **Fora do alcance do sistema atual:** skills de outro SO (ex.: `apple/*`, só macOS) e as que exigem toolset inativo (ex.: `sdlc-review`).
 - **Não empilhar skills.** Principal + apoio sob demanda; 5 skills "por garantia" só enchem contexto.
 - **O roteamento não pula gates.** Produção continua exigindo confirmação do alvo e backup.
 - **Adaptar não é apagar:** não renomeie a skill nem tire `default`/`editable` do frontmatter; o
-  `auto_load` a chama pelo nome. Ativar/desligar: `references/adaptar-ao-usuario.md` (fase 1).
+  carregamento automático chama a skill pelo nome. Ativar/desligar: `references/adaptar-ao-usuario.md` (fase 5).
 
 ## Verification
 
 - Pedido de tarefa → resposta começa com `Skill: ...` ou `Nenhuma skill cobre isso`.
-- A skill anunciada foi carregada com `skill_view` antes de agir.
+- A skill anunciada foi carregada (aberta, não só citada) antes de agir.
 - `checar_mapa.py` retorna `OK` (exit 0) depois de qualquer atualização do mapa ou deste arquivo: toda skill instalada está no mapa **e** na triagem (Desambiguação ou Rota por intenção).
 - Depois de adaptar ao usuário: nenhuma skill citada aqui falta na instalação dele.

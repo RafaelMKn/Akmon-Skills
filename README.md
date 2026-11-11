@@ -69,7 +69,27 @@ Oficina de **Agent Skills** para harnesses de IA (**Google Antigravity**, **Clau
 
 ## Skill padrão editável: `akmon`
 
-[`akmon`](05-dev-harness-cli/akmon/SKILL.md) é a skill **padrão**: fica ativa em toda requisição (`skills.auto_load`), escolhe qual skill rodar e anuncia a escolha em uma linha. É **editável**: vem como template cobrindo o catálogo inteiro, e a IA do usuário a adapta ao estilo de trabalho da pessoa — escolhe quais skills fazem sentido, instala as aprovadas e poda o akmon para citar **somente** as que foram baixadas. Receita: [`adaptar-ao-usuario.md`](05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md). Instale esta primeiro.
+[`akmon`](05-dev-harness-cli/akmon/SKILL.md) é a skill **padrão**: escolhe qual skill rodar e anuncia a escolha em uma linha, e pode ficar ativa em toda requisição se você quiser. É **editável**: vem como template cobrindo o catálogo inteiro, e a sua IA o adapta ao seu estilo de trabalho.
+
+### Comece por aqui: cole este prompt na sua IA
+
+Funciona em Claude Code, Codex, Antigravity, Hermes e outros harnesses (a receita pergunta onde instalar em cada um). Cole no chat:
+
+```text
+Leia o documento abaixo e siga o que está nele, fase por fase, na ordem:
+https://raw.githubusercontent.com/RafaelMKn/skills-library/main/05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md
+
+(Se o repositório skills-library já estiver clonado nesta máquina, leia o arquivo local:
+05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md.)
+
+Resumo do que você vai fazer: me entrevistar, uma pergunta por vez, para entender como eu trabalho;
+propor quais skills da biblioteca fazem sentido para mim; perguntar onde instalar (.claude, .agents
+ou outro); perguntar se quero o akmon rodando em toda requisição; e podar o akmon para citar só o
+que eu instalei. Não instale nem edite nenhum arquivo sem a minha permissão explícita.
+Se não conseguir abrir o link, me peça para colar o conteúdo do arquivo.
+```
+
+A receita completa está em [`adaptar-ao-usuario.md`](05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md).
 
 
 ## Bancadas da oficina (categorias)
@@ -306,11 +326,27 @@ Crie links simbólicos ou junctions para a pasta `.claude/skills/`:
 ln -s "$(pwd)/01-automacao-n8n-make/n8n-flow-builder" ~/.claude/skills/n8n-flow-builder
 ```
 
-### 2. Antigravity & Codex
-Aponte via `.agents/skills/` ou importe diretamente no arquivo de configuração do seu projeto.
+### 2. Codex
+Copie ou linke a pasta da skill para `~/.agents/skills/<skill>/` (todos os projetos) ou
+`.agents/skills/<skill>/` na raiz do repositório (só aquele projeto).
 
-### 3. OpenClaw & Hermes
-Copie ou aponte as skills desejadas para `~/.hermes/skills/<categoria>/<skill>/`.
+### 3. Antigravity
+Mesma pasta de projeto do Codex, `.agents/skills/<skill>/`; para valer em todos os projetos, use
+`~/.gemini/config/skills/<skill>/` (a única pasta global que o app, a CLI e a IDE leem).
+
+### 4. OpenClaw
+Skills em `~/.agents/skills/<skill>/` (mesma pasta do Codex) ou `<workspace>/skills/<skill>/` para um
+agente só.
+
+### 5. Hermes
+Skills em `~/.hermes/skills/<skill>/`, ou deixe o Hermes ler a pasta do Codex com
+`hermes config set skills.external_dirs '["~/.agents/skills"]'`. Skills de projeto
+(`.hermes/skills/` ou `.agents/skills/` na raiz do repo) só carregam depois de `hermes skills trust`.
+O Hermes é onde a biblioteca rende mais (carregamento automático do `akmon`, subagentes,
+orquestração).
+
+Prefere não montar isso à mão? Use o prompt da seção do [`akmon`](#skill-padrão-editável-akmon): a sua
+IA pergunta, escolhe e instala por você.
 
 ---
 *Akmon Skills — forjado em produção.*

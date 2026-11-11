@@ -8,7 +8,9 @@ Saída: 'OK' quando bate (exit 0); senão (exit 1) lista
   ORFA NO MAPA       citada no mapa e não instalada;
   ORFA NO SKILL.md   citada na triagem e não instalada;
   FORA DA TRIAGEM    instalada e sem nenhuma linha nas tabelas/cadeias do SKILL.md.
-Uso: checar_mapa.py [pasta-de-skills]   (padrão: ~/.hermes/skills). Somente stdlib.
+Uso: checar_mapa.py [pasta-de-skills ...]. Sem argumento, varre as pastas de skills que existirem:
+  ~/.claude/skills, ~/.agents/skills, ~/.gemini/config/skills, ~/.hermes/skills (usuário)
+  .claude/skills, .agents/skills (projeto, a partir do diretório atual). Somente stdlib.
 """
 import os
 import re
@@ -16,7 +18,20 @@ import sys
 from pathlib import Path
 
 HOME = Path(os.environ.get("HERMES_HOME", Path.home() / ".hermes"))
-SKILLS = Path(sys.argv[1]).expanduser() if len(sys.argv) > 1 else HOME / "skills"
+if len(sys.argv) > 1:
+    PASTAS = [Path(a).expanduser() for a in sys.argv[1:]]
+else:
+    candidatas = [
+        Path.home() / ".claude" / "skills",
+        Path.home() / ".agents" / "skills",
+        Path.home() / ".gemini" / "config" / "skills",
+        HOME / "skills",
+        Path.cwd() / ".claude" / "skills",
+        Path.cwd() / ".agents" / "skills",
+    ]
+    PASTAS = [c for c in candidatas if c.is_dir()]
+if not PASTAS:
+    sys.exit("Nenhuma pasta de skills encontrada: passe o caminho como argumento.")
 RAIZ = Path(__file__).resolve().parent.parent
 MAPA = RAIZ / "references" / "mapa.md"
 SKILL_MD = RAIZ / "SKILL.md"
@@ -33,12 +48,13 @@ def nome_da_skill(p: Path):
 
 
 instaladas = set()
-for p in SKILLS.rglob("SKILL.md"):
-    if any(part.startswith(".") for part in p.relative_to(SKILLS).parts):
-        continue
-    n = nome_da_skill(p)
-    if n and n not in IGNORAR:
-        instaladas.add(n)
+for pasta in PASTAS:
+    for p in pasta.rglob("SKILL.md"):
+        if any(part.startswith(".") for part in p.relative_to(pasta).parts):
+            continue
+        n = nome_da_skill(p)
+        if n and n not in IGNORAR:
+            instaladas.add(n)
 
 mapeadas = set(re.findall(r"^\| `([\w.-]+)` \|", MAPA.read_text(encoding="utf-8"), re.M))
 
@@ -53,6 +69,7 @@ faltando = sorted(instaladas - mapeadas)
 orfas = sorted(mapeadas - instaladas)
 orfas_skill = sorted(citadas - instaladas)
 fora = sorted(instaladas - citadas)
+print("pastas: " + ", ".join(str(x) for x in PASTAS))
 print(f"instaladas={len(instaladas)} mapeadas={len(mapeadas)} na_triagem={len(instaladas & citadas)}")
 for n in faltando:
     print(f"NAO MAPEADA: {n}")
