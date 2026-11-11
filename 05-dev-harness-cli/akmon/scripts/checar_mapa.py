@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compara as skills instaladas em ~/.hermes/skills com as citadas pelo estagiário.
+"""Compara as skills instaladas em ~/.hermes/skills com as citadas pelo akmon.
 
 Confere dois arquivos: references/mapa.md (linhas `| `nome` | ... |`) e as tabelas/cadeias do
 SKILL.md (linhas que começam com `|` ou contêm `→`).
@@ -19,7 +19,7 @@ SKILLS = Path(sys.argv[1]).expanduser() if len(sys.argv) > 1 else HOME / "skills
 RAIZ = Path(__file__).resolve().parent.parent
 MAPA = RAIZ / "references" / "mapa.md"
 SKILL_MD = RAIZ / "SKILL.md"
-IGNORAR = {"estagiario"}
+IGNORAR = {"akmon"}
 
 
 def nome_da_skill(p: Path):

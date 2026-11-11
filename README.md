@@ -1,4 +1,4 @@
-# ⚒️ Akmon Skills
+# Akmon Skills
 
 ```text
                                               %%%
@@ -65,16 +65,16 @@
 
 Oficina de **Agent Skills** para harnesses de IA (**Google Antigravity**, **Claude Code**, **Codex**, **OpenClaw**, **Hermes**). Cada peça sai de operação real, é saneada na bancada e fica pronta para ser levada à forja de quem for usar.
 
-🔨 **Peças no estoque:** 180 skills em 6 bancadas temáticas.
+**Peças no estoque:** 180 skills em 6 bancadas temáticas.
 
-## ⭐ Skill padrão editável: `estagiario`
+## Skill padrão editável: `akmon`
 
-[`estagiario`](05-dev-harness-cli/estagiario/SKILL.md) é a skill **padrão**: fica ativa em toda requisição (`skills.auto_load`), escolhe qual skill rodar e anuncia a escolha em uma linha. É **editável**: vem como template cobrindo o catálogo inteiro, e a IA do usuário a adapta ao estilo de trabalho da pessoa — escolhe quais skills fazem sentido, instala as aprovadas e poda o estagiário para citar **somente** as que foram baixadas. Receita: [`adaptar-ao-usuario.md`](05-dev-harness-cli/estagiario/references/adaptar-ao-usuario.md). Instale esta primeiro.
+[`akmon`](05-dev-harness-cli/akmon/SKILL.md) é a skill **padrão**: fica ativa em toda requisição (`skills.auto_load`), escolhe qual skill rodar e anuncia a escolha em uma linha. É **editável**: vem como template cobrindo o catálogo inteiro, e a IA do usuário a adapta ao estilo de trabalho da pessoa — escolhe quais skills fazem sentido, instala as aprovadas e poda o akmon para citar **somente** as que foram baixadas. Receita: [`adaptar-ao-usuario.md`](05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md). Instale esta primeiro.
 
 
-## 🗂️ Bancadas da oficina (categorias)
+## Bancadas da oficina (categorias)
 
-### 📁 [Automação de Processos & n8n / Make](01-automacao-n8n-make/README.md) (`01-automacao-n8n-make/`) — 23 skills
+### [Automação de Processos & n8n / Make](01-automacao-n8n-make/README.md) (`01-automacao-n8n-make/`) — 23 skills
 
 Skills especializadas em orquestração, arquitetura de workflows, depuração, nós de código, validação de expressões e self-hosting em n8n e Make.
 
@@ -104,7 +104,7 @@ Skills especializadas em orquestração, arquitetura de workflows, depuração, 
 | **[`radar-n8n`](01-automacao-n8n-make/radar-n8n/SKILL.md)** | Varre as instancias n8n e reporta erros por causa raiz. |
 | **[`using-n8n-mcp-skills`](01-automacao-n8n-make/using-n8n-mcp-skills/SKILL.md)** | Entry point for building, editing, validating, testing, or debugging n8n workflows through n8n-mcp. Use before any n8n w... |
 
-### 📁 [Design, UI Motion, 3D Web, Vídeo & Criativos](02-design-ui-motion-3d/README.md) (`02-design-ui-motion-3d/`) — 32 skills
+### [Design, UI Motion, 3D Web, Vídeo & Criativos](02-design-ui-motion-3d/README.md) (`02-design-ui-motion-3d/`) — 32 skills
 
 Skills para criação visual de alta fidelidade: WebGL/WebGPU (Three.js e R3F), GSAP ScrollTrigger, Framer Motion, animações em Canvas/Lottie, vídeo programático (Remotion, Manim) e criativos.
 
@@ -143,7 +143,7 @@ Skills para criação visual de alta fidelidade: WebGL/WebGPU (Three.js e R3F), 
 | **[`threejs-webgl`](02-design-ui-motion-3d/threejs-webgl/SKILL.md)** | Comprehensive skill for Three.js 3D web development. Use this skill when building interactive 3D scenes, WebGL/WebGPU ap... |
 | **[`web3d-integration-patterns`](02-design-ui-motion-3d/web3d-integration-patterns/SKILL.md)** | Meta-skill for combining Three.js, GSAP ScrollTrigger, React Three Fiber, Motion, and React Spring for complex 3D web ex... |
 
-### 📁 [Agentes Autônomos & Engenharia de Prompt](03-agentes-ia-prompts/README.md) (`03-agentes-ia-prompts/`) — 10 skills
+### [Agentes Autônomos & Engenharia de Prompt](03-agentes-ia-prompts/README.md) (`03-agentes-ia-prompts/`) — 10 skills
 
 Skills para construção, benchmark (eval sets) e calibração de agentes inteligentes em OpenClaw/Paperclip, engenharia de prompt avançada, computer use e humanização de copy.
 
@@ -160,7 +160,7 @@ Skills para construção, benchmark (eval sets) e calibração de agentes inteli
 | **[`openclaw-agent-creator`](03-agentes-ia-prompts/openclaw-agent-creator/SKILL.md)** | Expert guide for designing and building OpenClaw agents. Use this skill when asked to create, configure, or optimize an ... |
 | **[`prompt-engineering-agentes`](03-agentes-ia-prompts/prompt-engineering-agentes/SKILL.md)** | Técnicas de engenharia de prompt para agentes autônomos em OpenClaw, Paperclip e n8n. Use ao escrever ou revisar o syste... |
 
-### 📁 [APIs, Backend & Banco de Dados](04-backend-apis-banco/README.md) (`04-backend-apis-banco/`) — 14 skills
+### [APIs, Backend & Banco de Dados](04-backend-apis-banco/README.md) (`04-backend-apis-banco/`) — 14 skills
 
 Skills para desenvolvimento de APIs com Fastify, ORM com Prisma, segurança OAuth 2.0/2.1, integrações com ClickUp, Airtable, Notion e Composio.
 
@@ -181,7 +181,7 @@ Skills para desenvolvimento de APIs com Fastify, ORM com Prisma, segurança OAut
 | **[`prisma-client-api`](04-backend-apis-banco/prisma-client-api/SKILL.md)** | Prisma Client API reference covering model queries, filters, operators, and client methods. Use when writing database qu... |
 | **[`supabase-sql-permission-probes`](04-backend-apis-banco/supabase-sql-permission-probes/SKILL.md)** | Use when checking Supabase SQL permissions and ACLs. |
 
-### 📁 [Ferramental de Desenvolvimento, CLI & Harness](05-dev-harness-cli/README.md) (`05-dev-harness-cli/`) — 64 skills
+### [Ferramental de Desenvolvimento, CLI & Harness](05-dev-harness-cli/README.md) (`05-dev-harness-cli/`) — 64 skills
 
 Skills para engenharia de software (TDD, debugging sistemático, code review, spike), gestão de PRs/GitHub, orquestração de harnesses (Claude Code, Codex, OpenCode, Hermes) e infraestrutura.
 
@@ -204,7 +204,7 @@ Skills para engenharia de software (TDD, debugging sistemático, code review, sp
 | **[`dogfood`](05-dev-harness-cli/dogfood/SKILL.md)** | Exploratory QA of web apps: find bugs, evidence, reports. |
 | **[`doit`](05-dev-harness-cli/doit/SKILL.md)** | Use when told /doit: implement approved doc via subagents. |
 | **[`domain-modeling`](05-dev-harness-cli/domain-modeling/SKILL.md)** | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a CONTEXT.md, o... |
-| **[`estagiario`](05-dev-harness-cli/estagiario/SKILL.md)** | Use em toda requisição de trabalho (skill padrão editável). Escolhe e roda a skill ideal. |
+| **[`akmon`](05-dev-harness-cli/akmon/SKILL.md)** | Use em toda requisição de trabalho (skill padrão editável). Escolhe e roda a skill ideal. |
 | **[`external-agent-runtime-integration`](05-dev-harness-cli/external-agent-runtime-integration/SKILL.md)** | Use when integrating an external agent CLI runtime. |
 | **[`github`](05-dev-harness-cli/github/SKILL.md)** | GitHub via gh CLI: PRs, issues, reviews, repos, auth. |
 | **[`grill-with-docs`](05-dev-harness-cli/grill-with-docs/SKILL.md)** | A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go. |
@@ -252,7 +252,7 @@ Skills para engenharia de software (TDD, debugging sistemático, code review, sp
 | **[`update-cli-config`](05-dev-harness-cli/update-cli-config/SKILL.md)** | View and modify Codex CLI configuration settings in ~/.cursor/cli-config.json. Use when the user wants to change CLI set... |
 | **[`update-cursor-settings`](05-dev-harness-cli/update-cursor-settings/SKILL.md)** | Modify Codex/VSCode user settings in settings.json. Use when you want to change editor settings, preferences, configurat... |
 
-### 📁 [Produtividade, Pesquisa, Documentos & Mídia](06-produtividade-pesquisa-docs/README.md) (`06-produtividade-pesquisa-docs/`) — 37 skills
+### [Produtividade, Pesquisa, Documentos & Mídia](06-produtividade-pesquisa-docs/README.md) (`06-produtividade-pesquisa-docs/`) — 37 skills
 
 Skills para automação de escritório (Word, Excel, PDF, PowerPoint), Google Workspace, PKM (Obsidian), pesquisa acadêmica (arXiv), inteligência de mercado, email de terminal e transcrições de mídia.
 
@@ -296,7 +296,7 @@ Skills para automação de escritório (Word, Excel, PDF, PowerPoint), Google Wo
 | **[`xurl`](06-produtividade-pesquisa-docs/xurl/SKILL.md)** | X/Twitter via xurl CLI: raw post search, posting, DM, media. |
 | **[`youtube-content`](06-produtividade-pesquisa-docs/youtube-content/SKILL.md)** | YouTube transcripts to summaries, threads, blogs. |
 
-## ⚙️ Como levar uma peça para a sua forja
+## Como levar uma peça para a sua forja
 
 ### 1. Claude Code
 Crie links simbólicos ou junctions para a pasta `.claude/skills/`:

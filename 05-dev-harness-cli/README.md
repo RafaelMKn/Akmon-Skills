@@ -23,7 +23,7 @@ Total de skills nesta categoria: **64**
 | **[`dogfood`](dogfood/SKILL.md)** | Exploratory QA of web apps: find bugs, evidence, reports. |
 | **[`doit`](doit/SKILL.md)** | Use when told /doit: implement approved doc via subagents. |
 | **[`domain-modeling`](domain-modeling/SKILL.md)** | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a CONTEXT.md, or recording or editing an ADR. |
-| **[`estagiario`](estagiario/SKILL.md)** | ⭐ **Skill padrão editável**, ativa em toda requisição: escolhe e roda a skill ideal. Adaptável: a IA do usuário poda o mapa para só as skills instaladas. |
+| **[`akmon`](akmon/SKILL.md)** | **Skill padrão editável**, ativa em toda requisição: escolhe e roda a skill ideal. Adaptável: a IA do usuário poda o mapa para só as skills instaladas. |
 | **[`external-agent-runtime-integration`](external-agent-runtime-integration/SKILL.md)** | Use when integrating an external agent CLI runtime. |
 | **[`github`](github/SKILL.md)** | GitHub via gh CLI: PRs, issues, reviews, repos, auth. |
 | **[`grill-with-docs`](grill-with-docs/SKILL.md)** | A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go. |

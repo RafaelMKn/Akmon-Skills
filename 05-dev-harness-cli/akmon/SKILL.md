@@ -1,5 +1,5 @@
 ---
-name: estagiario
+name: akmon
 description: "Use em toda requisição de trabalho (skill padrão editável). Escolhe e roda a skill ideal."
 version: 0.3.0
 author: <autor>, Hermes Agent
@@ -13,7 +13,7 @@ metadata:
     related_skills: [using-n8n-mcp-skills, composio-apps]
 ---
 
-# Estagiário — roteador de skills (padrão da sessão)
+# Akmon — roteador de skills (padrão da sessão)
 
 Esta skill vem pré-carregada em toda sessão (`skills.auto_load`). Todo pedido de trabalho do operador
 passa por ela: escolher **a skill ideal**, anunciar em uma linha, carregar e executar seguindo a
@@ -34,7 +34,7 @@ no índice de skills do system prompt **não existe** nesta instalação: não a
 
 - **Todo pedido de tarefa** (fazer, corrigir, criar, investigar, publicar, pesquisar) — sem precisar
   de palavra-chave.
-- Chamada explícita: "estagiário, <pedido>" ou "qual skill uso pra X?" → modo completo (abaixo).
+- Chamada explícita: "akmon, <pedido>" ou "qual skill uso pra X?" → modo completo (abaixo).
 - **Não se aplica** a conversa, pergunta factual de uma linha ou continuação de tarefa cuja skill
   já foi carregada nesta sessão — aí segue direto, sem linha de anúncio.
 
@@ -57,11 +57,11 @@ no índice de skills do system prompt **não existe** nesta instalação: não a
 5. **Nenhuma serve:** `Nenhuma skill cobre isso — sigo sem skill.` e executa. Se sair procedimento
    reutilizável, propor skill no fim.
 
-### Modo completo (dúvida real, ou chamada explícita "estagiário")
+### Modo completo (dúvida real, ou chamada explícita "akmon")
 
 1. `terminal(command="python3 <pasta-da-skill>/scripts/checar_mapa.py")` —
    `NAO MAPEADA` = skill nova: leia com `skill_view` e inclua a linha em `references/mapa.md`.
-2. `skill_view(name="estagiario", file_path="references/mapa.md")` e decida com o mapa.
+2. `skill_view(name="akmon", file_path="references/mapa.md")` e decida com o mapa.
 3. Se a escolha muda o resultado e o pedido não decide ("arruma o fluxo" sem dizer criar ou
    corrigir, ou sem instância): UMA pergunta via `clarify`. Ambiguidade que não muda o resultado:
    decida sozinho.
