@@ -1,0 +1,41 @@
+{
+  "repo": "/caminho/absoluto/do/repo",
+  "mode": "separado",
+  "_nota_tested_sha": "separado: omita tested_sha (derivado do único sha). integrado: obrigatório, hash completo do commit temporário integrado servido; adicione também integration_requested_by_user=true.",
+  "targets": [
+    {
+      "label": "PR 123 login",
+      "kind": "pr",
+      "ref": "feature/login",
+      "sha": "0000000000000000000000000000000000000001",
+      "base_branch": "<base descoberta, não assumir main>",
+      "base_sha": "0000000000000000000000000000000000000002",
+      "base_discovery": "git symbolic-ref refs/remotes/origin/HEAD"
+    }
+  ],
+  "environment": {
+    "urls": ["http://127.0.0.1:5173/"],
+    "description": "Painel em worktree isolado; banco SQLite sintético local; integrações desligadas.",
+    "isolation_verified": false,
+    "url_serves_target_sha": false,
+    "readiness_evidence": [],
+    "resources": ["worktree <caminho>", "processo dev server pid <n>"],
+    "stop_commands": ["kill <pid>", "git worktree remove <caminho>"]
+  },
+  "scenarios": [
+    {
+      "id": "C1",
+      "title": "Login válido",
+      "source": "issue #123 critério 1; src/auth.ts no diff",
+      "priority": "alta",
+      "preconditions": ["usuário sintético existe"],
+      "data": ["usuario: <email> (senha fornecida pelo usuário na hora)"],
+      "steps": ["abrir /login", "informar usuário", "entrar"],
+      "expected": "redireciona para /home com nome do usuário",
+      "evidence_required": "URL final e texto do cabeçalho",
+      "depends_on": []
+    }
+  ],
+  "known_failures": [],
+  "extra_limits": []
+}

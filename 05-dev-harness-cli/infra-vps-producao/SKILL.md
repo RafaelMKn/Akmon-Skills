@@ -157,3 +157,7 @@ Pendências se agrupam no fim, com a data limite quando existir (renovação, tr
 - Hostname antigo continua respondendo depois de adicionar o novo.
 - Backup do volume existe e contém os três arquivos do SQLite.
 - Compose de produção fixa imagem por digest.
+
+## Referências adicionais
+
+- [references/triagem-servico-fora-do-ar.md](references/triagem-servico-fora-do-ar.md): Triagem de serviço "fora do ar" — de fora para dentro

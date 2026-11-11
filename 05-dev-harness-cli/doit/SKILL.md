@@ -101,3 +101,8 @@ A entrega final consiste exclusivamente em branch de integração local + commit
 - `git status` no repositório original do usuário permanece idêntico ao início da execução.
 - Branch de integração `doit/<slug>` contém histórico limpo e commits semânticos rastreáveis.
 - Testes e verificações declaradas foram executados e tiveram saída bem-sucedida confirmada pelo orquestrador.
+
+## Referências adicionais
+
+- [references/geometria-svg.md](references/geometria-svg.md): Homologação de gráficos SVG responsivos
+- [references/prompts-para-orquestrador.md](references/prompts-para-orquestrador.md): Escrever prompts /doit para outro orquestrador executar depois

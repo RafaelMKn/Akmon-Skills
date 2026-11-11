@@ -648,3 +648,10 @@ You are running in CLI/API mode, not hosted Claude Design. Ignore references to 
 - Do not under-ask for high-fidelity work with no brand context.
 - Do not produce generic SaaS layouts and call them designed.
 - Do not claim browser verification unless it actually happened.
+
+## Referências adicionais
+
+- [references/comparativo-ferramentas.md](references/comparativo-ferramentas.md): HTML de decisão: comparar ferramentas para um projeto
+- [references/estado-sobre-dom-real.md](references/estado-sobre-dom-real.md): Estados de interface desenhados sobre o DOM real (skeleton, vazio, erro)
+- [references/fluxograma-impresso.md](references/fluxograma-impresso.md): Fluxograma para apresentar (HTML + PDF de poucas páginas)
+- [references/portable-html-print.md](references/portable-html-print.md): Portable HTML and print verification

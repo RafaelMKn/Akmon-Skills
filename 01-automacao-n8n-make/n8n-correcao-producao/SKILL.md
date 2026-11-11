@@ -389,3 +389,8 @@ continua inferido até alguém colar a saída real.
 - `settings.errorWorkflow` preservado, se o fluxo tinha um.
 - Nenhum segredo em campo de texto de nó.
 - Bloqueios que não são seus estão nomeados com o dono e a pergunta aberta.
+
+## Referências adicionais
+
+- [references/teste-notificacoes.md](references/teste-notificacoes.md): Teste controlado de notificações WhatsApp
+- [references/versionamento-e-ci.md](references/versionamento-e-ci.md): Versionar fluxo n8n em git e automatizar deploy

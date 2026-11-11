@@ -79,3 +79,7 @@ Use the user's approved destination — `notion`, a calendar, a spreadsheet via 
 - [ ] Modality ("may"/"should"/"must") and OCR uncertainty preserved in the output.
 - [ ] No external write happened without explicit approval, and every approved write was read back.
 - [ ] The final response separates extracted facts, proposed tasks, assumptions, and blockers.
+
+## Referências adicionais
+
+- [references/decision-and-pendency-registers.md](references/decision-and-pendency-registers.md): Registros de pendências e decisões técnicas

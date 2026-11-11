@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Scoped Podman stdin-TAR padding compatibility wrapper; no global install."""
+import io
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tarfile
+
+REAL = '/usr/bin/podman'
+
+
+def compact_tar(data):
+    # Preserve headers and all payload blocks verbatim; remove ONLY extra EOF padding.
+    with tarfile.open(fileobj=io.BytesIO(data), mode='r:') as archive:
+        members = archive.getmembers()
+        end = max((m.offset_data + ((m.size + 511) // 512) * 512 for m in members), default=0)
+    if any(data[end:]):
+        raise ValueError('Nonzero data after archive: refusing to truncate')
+    if len(data) < end + 1024:
+        raise ValueError('Missing TAR EOF blocks')
+    return data[:end] + bytes(1024)
+
+
+def main():
+    args = sys.argv[1:]
+    if args and args[0] == 'cp' and '-' in args[1:] and args[-1] != '-':
+        data = sys.stdin.buffer.read()
+        try:
+            payload = compact_tar(data)
+        except (tarfile.TarError, ValueError) as exc:
+            print('QA Podman TAR wrapper refused invalid archive: ' + str(exc), file=sys.stderr)
+            return 2
+        audit = os.environ.get('QA_PODMAN_TAR_AUDIT')
+        if audit:
+            with Path(audit).open('a') as log:
+                log.write(f'tar_stdin original_bytes={len(data)} compact_bytes={len(payload)}\n')
+        return subprocess.run([REAL, *args], input=payload).returncode
+    os.execv(REAL, [REAL, *args])
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

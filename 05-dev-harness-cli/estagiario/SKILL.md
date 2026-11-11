@@ -1,13 +1,15 @@
 ---
 name: estagiario
-description: "Use ao chamar 'estagiário'. Escolhe e roda a skill ideal."
-version: 0.2.0
+description: "Use em toda requisição de trabalho (skill padrão editável). Escolhe e roda a skill ideal."
+version: 0.3.0
 author: <autor>, Hermes Agent
 license: MIT
 platforms: [linux]
 metadata:
   hermes:
-    tags: [roteamento, skills, catalogo]
+    tags: [roteamento, skills, catalogo, padrao, editavel]
+    default: true     # padrão: ativa em toda requisição (skills.auto_load)
+    editable: true    # template: adapte às skills que o usuário instalou
     related_skills: [using-n8n-mcp-skills, composio-apps]
 ---
 
@@ -18,6 +20,15 @@ passa por ela: escolher **a skill ideal**, anunciar em uma linha, carregar e exe
 skill. O índice de skills do system prompt diz o que existe; esta skill resolve **qual delas** quando
 há várias parecidas (20 de n8n, 3 de Composio, 2 de runtime de agente...) e em que **ordem** elas se
 encadeiam. O mapa completo, com o que cada skill faz e quando chamar, está em `references/mapa.md`.
+
+## Padrão editável (adapte ao usuário)
+
+Skill **padrão**: ativa em toda requisição, via `skills.auto_load`. E **editável**: as tabelas abaixo
+cobrem o catálogo inteiro da biblioteca, mas cada pessoa instala só parte dele. Na primeira vez, ou
+quando skills forem instaladas/removidas, siga `references/adaptar-ao-usuario.md`: entender o estilo
+de trabalho, escolher as skills que fazem sentido, instalar com o OK do usuário e podar este arquivo
+e o mapa para citar só o que está instalado. Enquanto não adaptada, skill citada aqui que não consta
+no índice de skills do system prompt **não existe** nesta instalação: não a carregue nem a invente.
 
 ## When to Use
 
@@ -36,7 +47,8 @@ encadeiam. O mapa completo, com o que cada skill faz e quando chamar, está em `
    - **Verbo:** criar, corrigir, revisar/auditar, investigar, operar servidor, publicar, pesquisar.
    - **Estado:** produção (cliente real) ou novo/laboratório. Produção puxa as skills com gates
      (`n8n-correcao-producao`, `infra-vps-producao`, `n8n-servidor-vps`).
-2. **Escolher UMA principal** pela tabela de desambiguação abaixo + índice do system prompt. Empate:
+2. **Escolher UMA principal** pela tabela de desambiguação abaixo + índice do system prompt, só entre
+   skills instaladas. Empate:
    a mais específica (a que cita o sistema pelo nome) vence. No máximo 2 de apoio.
 3. **Anunciar em uma linha**, sem narrar:
    `Skill: <principal> (apoio: <x>) — <motivo em até 12 palavras>.`
@@ -47,7 +59,7 @@ encadeiam. O mapa completo, com o que cada skill faz e quando chamar, está em `
 
 ### Modo completo (dúvida real, ou chamada explícita "estagiário")
 
-1. `terminal(command="python3 ~/.hermes/skills/<categoria>/estagiario/scripts/checar_mapa.py")` —
+1. `terminal(command="python3 <pasta-da-skill>/scripts/checar_mapa.py")` —
    `NAO MAPEADA` = skill nova: leia com `skill_view` e inclua a linha em `references/mapa.md`.
 2. `skill_view(name="estagiario", file_path="references/mapa.md")` e decida com o mapa.
 3. Se a escolha muda o resultado e o pedido não decide ("arruma o fluxo" sem dizer criar ou
@@ -70,28 +82,27 @@ encadeiam. O mapa completo, com o que cada skill faz e quando chamar, está em `
 | Subir/atualizar/reverter o **container** n8n no VPS | `n8n-servidor-vps` | `n8n-self-hosting` (VM nova do zero) |
 | VPS de produção: Docker, Traefik, DNS | `infra-vps-producao` | `auditoria-infra-hospedagem` (custo da conta) |
 | Conta real de app (Gmail, Calendar, YouTube, Slack, GitHub...) | `composio-apps` | `composio` (setup/SDK do Composio) |
-| Notion: tarefa/prazo pessoal | skill de captura rápida de tarefas do seu ambiente | `notion` (API genérica) |
-| Notion: post LinkedIn / calendário editorial | skill de posts LinkedIn do seu ambiente | `notion` |
+| Notion: páginas, bases, API | `notion` | — |
 | Notion público sem login | `notion-publico-raspagem` | `notion` |
-| Implementar feature/bug (código) | skill do projeto + skill de delegação do seu ambiente (delegar) | `claude-code`/`codex` (CLI externo) |
+| Implementar feature/bug (código) | skill do projeto + `esquadrao-agentes` (delegar) | `claude-code`/`codex` (CLI externo) |
 | Bug de código genérico | `systematic-debugging` | `node-inspect-debugger`/`python-debugpy` |
 | Conferir o que outro agente fez | `auditoria-trabalho-de-agente` | `requesting-code-review` (próprio diff) |
 | Prompt de agente de IA | `prompt-engineering-agentes` | `n8n-agents` (nó AI Agent) |
 | Medir se mudança no agente melhorou | `eval-set-agentes` | — |
-| Vídeo motion da <empresa> | `motion-flux` | `remotion-video` (render), `elevenlabs-motion` (voz) |
-| Landing page / site de cliente | skill de redesign de landing page do seu ambiente | skill do site próprio da <empresa> |
+| Vídeo motion | `motion-flux` | `remotion-video` (render), `elevenlabs-motion` (voz) |
+| Landing page / site de cliente | `redesign-landing-page` | `impeccable` (ajuste pontual de UI) |
 | Melhorar UI existente | `impeccable` | `claude-design` (HTML avulso) |
 | Plugar CLI de agente como runtime | `delegated-cli-runtime` | `external-agent-runtime-integration` (apoio) |
 | Hermes lento/caro/contexto grande | `hermes-context-tuning` | `hermes-agent` |
 | Trocar modelo/effort/fallback | `hermes-roteamento-modelos` | `hermes-agent` |
-| Decisão em aberto, escopo indefinido | `grilling` (padrão do operador) | `grill-with-docs` (gera ADR) |
+| Decisão em aberto, escopo indefinido | `grilling` | `grill-with-docs` (gera ADR) |
 
 ## Cadeias frequentes
 
 - **Fluxo em produção quebrado:** `radar-n8n` → `incident-forensics` → `n8n-correcao-producao`.
 - **Fluxo novo:** `n8n-flow-builder` → `n8n-node-configuration`/`n8n-expression-syntax` →
   `n8n-validation-expert` → `n8n-flow-reviewer`.
-- **Feature de código:** skill do projeto → skill de delegação do seu ambiente → `delegate_task` →
+- **Feature de código:** skill do projeto → `esquadrao-agentes` → `delegate_task` →
   `auditoria-trabalho-de-agente`.
 - **Vídeo:** `motion-flux` → `elevenlabs-motion` → `remotion-video`.
 
@@ -104,11 +115,12 @@ encadeiam. O mapa completo, com o que cada skill faz e quando chamar, está em `
 - **Fora do alcance do sistema atual:** skills de outro SO (ex.: `apple/*`, só macOS) e as que exigem toolset inativo (ex.: `sdlc-review`).
 - **Não empilhar skills.** Principal + apoio sob demanda; 5 skills "por garantia" só enchem contexto.
 - **O roteamento não pula gates.** Produção continua exigindo confirmação do alvo e backup.
-- **Desligar:** `hermes config set skills.auto_load '[]'`. Sessão avulsa sem ela:
-  `hermes --ignore-rules`.
+- **Adaptar não é apagar:** não renomeie a skill nem tire `default`/`editable` do frontmatter; o
+  `auto_load` a chama pelo nome. Ativar/desligar: `references/adaptar-ao-usuario.md` (fase 1).
 
 ## Verification
 
 - Pedido de tarefa → resposta começa com `Skill: ...` ou `Nenhuma skill cobre isso`.
 - A skill anunciada foi carregada com `skill_view` antes de agir.
-- `checar_mapa.py` retorna `OK` depois de qualquer atualização do mapa.
+- `checar_mapa.py` retorna `OK` (exit 0) depois de qualquer atualização do mapa ou deste arquivo.
+- Depois de adaptar ao usuário: nenhuma skill citada aqui falta na instalação dele.

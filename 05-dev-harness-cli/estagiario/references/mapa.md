@@ -1,6 +1,6 @@
 # Mapa de skills — o que cada uma faz
 
-Levantado a partir da biblioteca publicada; `scripts/checar_mapa.py <pasta-de-skills>` confere o mapa contra ela. Formato: `| \`nome\` | faz | chame quando |`.
+Levantado a partir da biblioteca publicada (template; a skill é padrão editável, ver `adaptar-ao-usuario.md`); `scripts/checar_mapa.py <pasta-de-skills>` confere o mapa contra ela. Formato: `| \`nome\` | faz | chame quando |`.
 O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `` — mantenha o formato.
 
 ## n8n — fluxos
@@ -51,6 +51,8 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `box` | Arquivos, compartilhamento e metadados no Box | Box |
 | `xurl` | X/Twitter: busca, post, DM, mídia | X/Twitter |
 | `whatsapp-baileys-local` | Envio de WhatsApp pela bancada Baileys local | Mandar mensagem WhatsApp pela bancada local |
+| `evolution-podman-local` | Instala a Evolution API (WhatsApp) local com Podman | Subir Evolution API local |
+| `integracao-api-terceiros` | Contrato com API de CRM/ERP de cliente: spec real, auth, escrita de teste | Montar/consertar chamada a API externa de cliente (401/403/500) |
 
 ## Agentes de IA
 
@@ -69,6 +71,8 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `computer-use` | Controlar o desktop (mouse, teclado, tela) | Tarefa que exige GUI fora do navegador |
 | `ia-quota-monitor` | Cotas e rate limits de Claude Code, Codex, Gemini | "Quanto de cota tenho?", 429 |
 | `create-subagent` | Cria subagentes especializados com prompt de sistema próprio | Definir subagente reutilizável |
+| `agent-session-handoff` | Encaminha instruções para uma sessão de agente já em execução | Repassar ordem a um agente vivo |
+| `esquadrao-agentes` | Briefings e contratos de subagentes para equipes multiagente | Delegar trabalho a subagentes |
 
 ## Hermes
 
@@ -80,6 +84,7 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `hermes-agent-skill-authoring` | Padrões de SKILL.md no repo do Hermes | Criar skill para o repo hermes-agent |
 | `inspecting-hermes-desktop-dom` | Ler DOM/CSS do app desktop via CDP | Bug visual do Hermes desktop |
 | `skill-finder` | Buscar/instalar skills; decidir se precisa de skill | "Existe skill para X?" |
+| `hermes-voz` | Configura e depura voz e wake do Hermes | Voz/wake do Hermes não funciona ou será configurada |
 
 ## Desenvolvimento de software
 
@@ -103,6 +108,13 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `domain-modeling` | Modelo de domínio, CONTEXT.md, ADR | Terminologia do projeto, registrar decisão |
 | `postgres-least-privilege-api-tests` | Testes de privilégio mínimo e de bloqueio (locks) em Postgres | Testar permissões e locks de API com Postgres |
 | `sdlc-review` | Revisa handoffs do Kanban e roteia resultados verificados (exige kanban) | Revisar entrega do Kanban |
+| `chromium-print-regression` | Testa CSS de impressão com PDFs reais do Chromium | Regressão de layout de impressão/PDF |
+| `doit` | Implementa documento aprovado por subagentes (`/doit`) | Usuário diz `/doit` com doc aprovado |
+| `pg-budget-reservation-ledger` | Gate de orçamento diário de API em PostgreSQL com reserva e ledger | Limite de gasto diário por API em Postgres |
+| `previa-carregamento-regressao` | Testa prévias de carregamento (HTML e React) | Regressão de tela de loading/prévia |
+| `qa-chrome` | Testa PRs com navegador real e provas auditáveis | QA de PR/branch com evidências |
+| `storage-timeout-profiling` | Perfila testes pesados de storage que estouram timeout | Teste de storage dando timeout |
+| `supabase-sql-permission-probes` | Confere permissões e ACLs SQL no Supabase | Auditar grants/RLS/ACL no Supabase |
 
 ## Design, sites e UI
 
@@ -130,12 +142,14 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `scroll-reveal-libraries` | Reveal por scroll simples com AOS (fade/slide) | Landing page com efeito básico de entrada |
 | `threejs-webgl` | Three.js e WebGL/WebGPU: cenas, configuradores, visualização 3D | Cena 3D no navegador sem React |
 | `web3d-integration-patterns` | Combina Three.js, GSAP, R3F, Motion e React Spring em 3D | Experiência 3D que mistura várias bibliotecas |
+| `editorial-html-content` | Portais HTML e exportação de reportagens | Reportagem/portal editorial em HTML |
+| `redesign-landing-page` | Redesign de landing page ou marca do site, com mocks e feedback visual | Rebrand/redesign de landing ou site |
 
 ## Vídeo, áudio e mídia
 
 | Skill | Faz | Chame quando |
 |---|---|---|
-| `motion-flux` | Pipeline editorial de vídeo motion da <empresa> (ideia → roteiro → voz → takes) | Reels/Shorts da <empresa> |
+| `motion-flux` | Pipeline editorial de vídeo motion (ideia → roteiro → voz → takes) | Reels/Shorts em motion |
 | `elevenlabs-motion` | Locução ElevenLabs com timings | Peça aprovada precisa de voz |
 | `remotion-video` | Render de vídeo com Remotion (MP4/MOV, legendas) | Gerar o arquivo de vídeo |
 | `manim-video` | Animações Manim estilo 3Blue1Brown | Animação matemática/algoritmo |
@@ -144,6 +158,7 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `gif-search` | Buscar/baixar GIFs do Tenor | GIF |
 | `songsee` | Espectrogramas e features de áudio | Analisar áudio |
 | `songwriting-and-ai-music` | Composição e prompts Suno | Música com IA |
+| `motionmaxxing` | Dirige e constrói filmes em motion graphics (lançamento, promo, anúncio) | Vídeo motion com direção criativa de marca |
 
 ## Conteúdo, marketing e carreira
 
@@ -154,6 +169,8 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `curriculo-blindado` | Banca de 7 avaliadores que tentam reprovar o CV | Blindar/revisar currículo contra vaga com estresse máximo |
 | `relatorio-resultados-cliente` | Relatório de resultados/métricas de cliente | Relatório mensal de cliente |
 | `pauta-definicao-cliente` | Pauta, deck, registro de decisão e mapa de status para reunião | Reunião com cliente travado; "apresentar o que temos e o que falta" (vence `claude-design`) |
+| `carreira-e-posicionamento` | Currículo para ATS, LinkedIn, plano de estudos e roadmap de carreira em tecnologia | Revisar currículo/LinkedIn ou planejar carreira |
+| `naming` | Nomeia produtos, SaaS, marcas, bots e apps com processo por metáfora | Precisa de nome para algo |
 
 ## Produtividade, documentos e notas
 
@@ -177,6 +194,8 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `apple-notes` | Criar, buscar e editar Apple Notes pelo CLI `memo` (só macOS) | Nota no Apple Notes |
 | `apple-reminders` | Lembretes do Apple via `remindctl` (só macOS) | Lembrete no Apple Reminders |
 | `findmy` | Rastreia dispositivos Apple pelo app Buscar (só macOS) | Localizar dispositivo Apple |
+| `imessage` | iMessage/SMS pela CLI `imsg` (só macOS) | Enviar/ler iMessage no macOS |
+| `notion-view-presentation` | Enxuga visualização de tabelas do Notion sem alterar dados | Tabela do Notion poluída para apresentar |
 
 ## Pesquisa e web
 
@@ -188,6 +207,7 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `grounded-citations` | Resposta com fontes verificáveis | Precisa citar fonte |
 | `llm-wiki` | Base de conhecimento markdown interligada | Montar/consultar wiki pessoal |
 | `blocked-page-recovery` | Contornar 403/429, paywall, WAF | Fetch falhou |
+| `documentos-dados-publicos` | Coleta em lote de documentos e bases oficiais | Baixar documentos/bases públicas em volume |
 
 ## Decisão e planejamento
 
@@ -196,6 +216,7 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `grilling` | Interrogatório para estressar plano/decisão (padrão do operador) | Decisão ou escopo em aberto |
 | `grill-with-docs` | Mesmo interrogatório gerando ADR e glossário | Decisão que precisa ficar documentada |
 | `guia-contexto-projeto` | Junta repo, pastas locais e decisões de conversas passadas em guia com objetivo, decisões pendentes e tasks com aceite | "Faz um guia do contexto + tasks para fechar a v1 do projeto X" |
+| `shark-tank` | Estressa ideia de negócio como banca de investidores | Avaliar/estressar uma ideia ou proposta |
 
 ## Linux e máquina local
 
@@ -204,6 +225,9 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `linux-power-management` | Energia, calor, ventoinha, CPU | Notebook quente/bateria |
 | `linux-desktop-customization` | Temas e painéis do desktop | Personalizar KDE/desktop |
 | `limpeza-workspace-dev` | Inventário git, destino seguro (bundle/quarentena) e reorganização da pasta de projetos com fases e portão | "Organiza o /dev", worktrees/backups/QA sobrando, liberar espaço |
+| `linux-app-management` | Gerencia apps e backups no Linux | Instalar/remover app ou fazer backup no Linux |
+| `linux-audio-pipewire` | Corrige áudio no Linux: PipeWire, mic, Bluetooth, ganho | Áudio/mic/Bluetooth com problema no Linux |
+| `linux-memory-swap-tuning` | Ajusta swap, zram, zswap e pressão de memória com baseline e rollback | Travamento por memória ou ajuste de swap |
 
 ## Complementos do catálogo
 

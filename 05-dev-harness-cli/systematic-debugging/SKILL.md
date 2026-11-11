@@ -409,3 +409,9 @@ From debugging sessions:
 - New bugs introduced: Near zero vs common
 
 **No shortcuts. No guessing. Systematic always wins.**
+
+## Referências adicionais
+
+- [references/desktop-app-diagnosis.md](references/desktop-app-diagnosis.md): Diagnosing a third-party desktop app (Electron / AppImage) from the outside
+- [references/generated-output-lifecycle.md](references/generated-output-lifecycle.md): Regressões de geração e ciclo de vida da entrega
+- [references/podman-copy-padding.md](references/podman-copy-padding.md): Podman: broken pipe ao receber TAR por stdin

@@ -114,3 +114,7 @@ Só quando mudou a identidade visual da marca, entrou nova família tipográfica
 - `impeccable` — crítica de design, depois que o DS existe
 - `claude-design` — artefato HTML one-off
 - `prompt-engineering-agentes` — a estrutura XML mandatória que os prompts desta skill usam
+
+## Referências adicionais
+
+- [references/coleta-e-delegacao.md](references/coleta-e-delegacao.md): Coleta de evidência e delegação (referência de site público)
