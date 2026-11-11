@@ -786,4 +786,4 @@ For Three.js-specific animations, also reference the **threejs-webgl** skill.
 For React components with built-in animations, reference the **motion-framer** skill.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

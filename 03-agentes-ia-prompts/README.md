@@ -18,4 +18,4 @@ Total de skills nesta categoria: **10**
 | **[`prompt-engineering-agentes`](prompt-engineering-agentes/SKILL.md)** | Técnicas de engenharia de prompt para agentes autônomos em OpenClaw, Paperclip e n8n. Use ao escrever ou revisar o system prompt de um agente, ao definir persona/SOUL/IDENTITY de um agente OpenClaw, ao orquestrar múltiplos agentes no Paperclip, ao configurar o prompt de um nó de IA no n8n (AI Agent, Text Classifier, Information Extractor), ou quando o agente estiver alucinando, ignorando ferramentas, saindo do personagem ou devolvendo formato errado. |
 
 ---
-*Skills Library*
+*Akmon Skills*

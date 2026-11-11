@@ -94,4 +94,4 @@ projetos/motion/<slug-da-ideia>/
 Consulte [references/contrato-de-entregaveis.md](references/contrato-de-entregaveis.md) para detalhes de cada artefato.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

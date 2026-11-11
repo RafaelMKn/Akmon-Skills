@@ -115,4 +115,4 @@ python skills/make-manager/scripts/make_api.py --account <CONTA> add-lead-error-
 - [Logs](https://developers.make.com/api-documentation/api-reference/scenarios-greater-than-logs)
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

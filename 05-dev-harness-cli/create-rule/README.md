@@ -169,4 +169,4 @@ alwaysApply: false
 - [ ] Includes concrete examples
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

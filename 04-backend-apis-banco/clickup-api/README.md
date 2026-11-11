@@ -199,4 +199,4 @@ Ao criar ou atualizar tarefas com `create-task` ou `update-task`, utilize um arq
 - [Gestão de Rate Limits](https://developer.clickup.com/docs/rate-limits)
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

@@ -1102,4 +1102,4 @@ Monitor re-renders and optimize components causing performance issues.
 - [Poimandres (pmnd.rs)](https://pmnd.rs/) - Ecosystem overview
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

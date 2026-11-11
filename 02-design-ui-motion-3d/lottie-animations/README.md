@@ -709,4 +709,4 @@ This skill includes:
 - **react-three-fiber** - Alternative for complex 3D animated scenes
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

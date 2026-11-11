@@ -125,4 +125,4 @@ If user says "use dark theme" or "change my theme":
 5. Inform the user the setting has been changed and whether a reload is needed
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

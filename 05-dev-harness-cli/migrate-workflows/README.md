@@ -140,4 +140,4 @@ For each workflow file:
     -   Legacy workflow files safely archived as `.md.bak`.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

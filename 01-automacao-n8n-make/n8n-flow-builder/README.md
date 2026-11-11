@@ -50,4 +50,4 @@ Tokens/chaves SEMPRE pelo sistema de credenciais do n8n. Um Set node segurando t
 Peça permissão antes de testar quando houver efeitos colaterais (envio de mensagens, escrita em DB). Depois do teste, confira a execução: `n8n_executions` (MCP) ou `n8n_api.py list-executions --workflow-id <ID> --limit 3`.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

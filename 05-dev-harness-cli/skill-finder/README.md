@@ -167,4 +167,4 @@ Source policy:
 - [ ] Index updated successfully (if requested)
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

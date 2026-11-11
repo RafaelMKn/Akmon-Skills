@@ -1111,4 +1111,4 @@ color: 0x23153c
 - **react-three-fiber**: Advanced 3D when lightweight effects aren't enough
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

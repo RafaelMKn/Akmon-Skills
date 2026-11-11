@@ -841,4 +841,4 @@ module.exports = {
 - **threejs-webgl**: For 3D background effects as alternative to Particles/Plasma
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

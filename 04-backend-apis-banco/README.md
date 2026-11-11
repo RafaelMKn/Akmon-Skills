@@ -22,4 +22,4 @@ Total de skills nesta categoria: **14**
 | **[`supabase-sql-permission-probes`](supabase-sql-permission-probes/SKILL.md)** | Use when checking Supabase SQL permissions and ACLs. |
 
 ---
-*Skills Library*
+*Akmon Skills*

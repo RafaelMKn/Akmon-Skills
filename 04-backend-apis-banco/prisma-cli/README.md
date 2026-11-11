@@ -294,4 +294,4 @@ references/debug.md          - Debug info
 Use the command categories above for navigation, then open the specific command reference file you need.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

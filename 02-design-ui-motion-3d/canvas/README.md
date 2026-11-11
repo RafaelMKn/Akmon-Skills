@@ -166,4 +166,4 @@ Stats in a Grid, Table directly under H2, text sections without cards.
 ```
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

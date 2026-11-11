@@ -230,4 +230,4 @@ Use the my-agent subagent to [task description]
 - Verify YAML frontmatter syntax is valid
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

@@ -1,15 +1,78 @@
-# 🧠 Master Skills Library
+# ⚒️ Akmon Skills
 
-Biblioteca unificada e curada de **Agent Skills** para harnesses de IA (**Google Antigravity**, **Claude Code**, **Codex**, **OpenClaw**, **Hermes**).
+```text
+                                              %%%
+                                           %%####%%=
+                                        %@@@@@@@*:
+                                      %%%%%@@@%
+                                 +%%@@%%#%%-
+                               @@@@@@@@@%.
+                              %%%%#@@#%%%
+                           =%%+**%%=
+                         %%####                         %@%%%+
+                      %%%#####::                     #%%@@@@@@@%
+                    +@@%##%##.                      ####@@@@@@@@*
+                   #%@@@@@@%%.                    ##@@#%@@@@%%%%.
+                  +%@@@@@@@@@%%*:              #####%@*%@@@%%@%=
+                  +%@@@@@@@@@@@@@@@=--**-...     #%##+%%%@%%@%+
+                 .+%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@####=%%%%%@% #
+                     ==%@@@@@@@@@@@@@@@@@@@@@@@@%+#+@=%%%%%%#=#+
+                         ----#%%%@@@@%@@@@@@@@@@@%+*@-..%#*=-#@@@@%%
+                                 --%@@%*@@@@@@@@@@@@@@%.+:%%%%%%@%@@@%%*
+                                  .-@@@%*@@@@@@@%%@%%@%#%%%%%%%%%%%%%%%%*
+                                   .%%@@@**%@@%@@%%%%%%%%%%%%%%%%###%%%%#
+                                     :%@@@@@%@%*++#@%%=%%%%%%%%%*%%%%%%%%%=
+                                       :@@@@@@@@@%%%%%%%@%     %%%%%%%%%%%%:
+                                        :%@@@@@@@@%%%%%%%%#%%%%%%+%%%%%%%%%.%
+                                          %@@@@@@@@@%%%%%%%%%@##  =%@%@%@@%=%
+                                          #@@@@@%%@@%%%%#%%%%%=     .=+%%%%@%
+                                           %@@@@@@@@%#%%@@@%%.       %%%@@@@%%
+                                         :#%%%%###****#####%%@%     -%%@@@@@@#
+                                         %%%%###%%*@#=+#%#%%#%%     :%%@%%@@@
+                                         .%%%%%##********##%%%%#     *###%%%%
+                                       .%:@@@@@@@@@@@@@@@@@%%%%%%   .#####%%#
+                                      @@%%@@@@@@@@@@@@@@@@@%%%%%%%% -####%%%
+                                    .%%@+%@@@@@@@@@@@@@@@@@%%%%%%%%%=###%#%
+                                   *%@@@.%@@@@@@@@@@@@@@@%@%%%%%%%%%%%%%#%:
+                           =      %%@@%%:%@@@@@@@@@@@@@@@@%%%#%@@#**##%@@%%+
+                             -   %%%%@@@%%%@@@@@@@%@#:---===+**++=###%%@%
+               : -    ..      .:%%%@@@%.@* .. ...:::::--%%@@%%*+++*@@@#%*
+                 -    .  : .==+:              :%%%@@@@@@@@@@@@@%%@%%%%%%%
+             == .+-*--               .++++++**+++++++++=*#%@@@%%%@@%%%%@%
+     :**++++++=              =++++++++++++++++*###########%@@%%%%@@@@@@@@.
+   %%@@@@%%%%@%=%%%*%=:**++++*+++++:+*####################%@@@%%%@@@@@@@@%:
+   %@@@@@@@%@%%@%%@%@@%%%%%%%@@@@%*+######################%%@%%%%#%@@@@@@@@#
+   %%%%@@@@%@@%%%%%:%%@%%#%#@%%%@%########################%@%%%%%%:*@@%+@@#%%
+   %%%%%@%%%%%%%%%%%%%%%%%%%%%%%%%################%@@@@@@@@@@@@%%% +%@@@@@@@@@
+       %@@@%%%%%%%%%%%%%%%%%%%%%%%########@@@@@@@@@@@@@@@@@@@@%%%% +%@@@@@@@@@%
+          %@@@@@@@@@@@@@@@@@@@@@%%@@@%@@@@@%%%%%@%@@@@@@@@@@@@@%%%# =@@@@@@@@@@%
+            %@@@@@@@@@@@@@@%@@@%@@@@@@%%%%%%@@%%%@@@@@@@@@@@%@%%%%%  =%%@@@@@@@@%
+             @@@@@@@@@@@@@@@@%@%%%@%%%%%%%%%%%%%%@@@@@@@@@@@@@%%%%%    =+@%%.%%%@@
+             %@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@%@%%%      . ##%%@%%
+             %@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@%@%%%%       :#%%%%%%
+            %@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%#%@@@%@@@%@@%%%.         :%#%@@%
+          %%@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%#%##                      -#@@*#.
+      *%%%%%%%%%%%%%%%%%@@@@@@@@@%%%%%%%%%%%%%#%%%#####%%%-                   .+#%#%.
+   %@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%##%########%%%%%%%%%%%%%-                    *%@%#*
+   +@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#%%%%%%%%%%%%%%%%%%%%%%%-                    %-#%%%@%#*%
+   :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%=                    %@#%%@@%#%%*#
+    %@@@@@@@@@@@@@@@@%%@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%+                             #%%@@%%%
+         .+%%%%@@@@@%%%%%%@@%%%%%%%%%%%%%%%%%#
+                             =%%%%%%*
+```
 
-📊 **Total de skills:** 180 skills organizadas em 6 categorias temáticas.
+> **Akmon** (grego *ákmōn*, "bigorna"): a bigorna onde as skills são forjadas.
+
+Oficina de **Agent Skills** para harnesses de IA (**Google Antigravity**, **Claude Code**, **Codex**, **OpenClaw**, **Hermes**). Cada peça sai de operação real, é saneada na bancada e fica pronta para ser levada à forja de quem for usar.
+
+🔨 **Peças no estoque:** 180 skills em 6 bancadas temáticas.
 
 ## ⭐ Skill padrão editável: `estagiario`
 
 [`estagiario`](05-dev-harness-cli/estagiario/SKILL.md) é a skill **padrão**: fica ativa em toda requisição (`skills.auto_load`), escolhe qual skill rodar e anuncia a escolha em uma linha. É **editável**: vem como template cobrindo o catálogo inteiro, e a IA do usuário a adapta ao estilo de trabalho da pessoa — escolhe quais skills fazem sentido, instala as aprovadas e poda o estagiário para citar **somente** as que foram baixadas. Receita: [`adaptar-ao-usuario.md`](05-dev-harness-cli/estagiario/references/adaptar-ao-usuario.md). Instale esta primeiro.
 
 
-## 🗂️ Categorias
+## 🗂️ Bancadas da oficina (categorias)
 
 ### 📁 [Automação de Processos & n8n / Make](01-automacao-n8n-make/README.md) (`01-automacao-n8n-make/`) — 23 skills
 
@@ -233,7 +296,7 @@ Skills para automação de escritório (Word, Excel, PDF, PowerPoint), Google Wo
 | **[`xurl`](06-produtividade-pesquisa-docs/xurl/SKILL.md)** | X/Twitter via xurl CLI: raw post search, posting, DM, media. |
 | **[`youtube-content`](06-produtividade-pesquisa-docs/youtube-content/SKILL.md)** | YouTube transcripts to summaries, threads, blogs. |
 
-## ⚙️ Como Utilizar
+## ⚙️ Como levar uma peça para a sua forja
 
 ### 1. Claude Code
 Crie links simbólicos ou junctions para a pasta `.claude/skills/`:
@@ -250,4 +313,4 @@ Aponte via `.agents/skills/` ou importe diretamente no arquivo de configuração
 Copie ou aponte as skills desejadas para `~/.hermes/skills/<categoria>/<skill>/`.
 
 ---
-*Skills Library*
+*Akmon Skills — forjado em produção.*

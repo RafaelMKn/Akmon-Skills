@@ -202,4 +202,4 @@ echo '{"model":{"display_name":"Opus"},"context_window":{"used_percentage":25}}'
 The command is spawned with `child_process.spawn` (no shell on Unix, `shell: true` on Windows for .cmd/.bat compatibility). Updates are debounced at the configured interval. If a new update triggers while a script is running, the in-flight process is killed via `AbortController` and the new invocation starts immediately.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

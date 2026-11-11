@@ -138,4 +138,4 @@ If you don't have the Task tool available:
 8. [ ] If the user asks you to undo the migration, do the opposite of the above steps to restore the original files.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

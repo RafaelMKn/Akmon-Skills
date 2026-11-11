@@ -145,4 +145,4 @@ As habilidades estão disponíveis no diretório [01-automacao-n8n-make/](../../
     *   Se você estiver usando o Claude Code, você pode adicionar a pasta `skills/` como plugins locais ou utilizar os markdowns como referências no seu contexto de prompt do sistema.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

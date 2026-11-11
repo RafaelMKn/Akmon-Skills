@@ -860,4 +860,4 @@ This skill includes bundled resources for multi-library integration:
 **Use this skill when building complex 3D web applications that integrate multiple animation and rendering libraries. For library-specific implementation details, reference the individual foundation skills.**
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

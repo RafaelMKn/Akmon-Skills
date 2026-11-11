@@ -1008,4 +1008,4 @@ The `scripts/` directory includes tools for implementing design patterns:
 The `assets/` directory contains design system templates and starter files. See `assets/README.md` for details.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

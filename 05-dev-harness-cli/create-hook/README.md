@@ -246,4 +246,4 @@ If you are editing an existing hooks setup, preserve unrelated hooks and only ch
 - [ ] Checked the Hooks tab or Hooks output channel if debugging was needed
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

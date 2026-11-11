@@ -236,4 +236,4 @@ If the user's integration monitors, lists, or visualizes agents - dashboards of 
 - Python / non-TypeScript SDKs. There is no first-party SDK in other languages at time of writing; REST is the portable option.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

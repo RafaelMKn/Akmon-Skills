@@ -836,4 +836,4 @@ Create custom animations with CSS:
 - **animated-component-libraries**: For pre-built animated React components
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

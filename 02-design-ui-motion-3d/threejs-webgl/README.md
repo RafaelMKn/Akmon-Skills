@@ -599,4 +599,4 @@ For animation, combine with the **gsap-scrolltrigger** skill.
 For UI animations, use the **motion-framer** skill.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

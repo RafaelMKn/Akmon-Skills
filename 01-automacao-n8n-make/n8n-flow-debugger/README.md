@@ -46,4 +46,4 @@ Re-execute o cenário (com permissão se houver efeitos colaterais) e confirme c
 - Instância única hoje, mas se aparecer o tool `n8n_instances`, confira o alvo antes de ler/escrever (`n8n-multi-instance`).
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

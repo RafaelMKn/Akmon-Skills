@@ -195,4 +195,4 @@ When you have determined that you need permission:
 **Never try to pipe or redirect output of the gh command, it will not work in your environment**
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

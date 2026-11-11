@@ -197,4 +197,4 @@ async function refreshAccessToken(fastify: FastifyInstance, refreshToken: string
 - See `MOBILE_OAUTH.md` for native/mobile app flows (RFC 8252) and custom URI schemes
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

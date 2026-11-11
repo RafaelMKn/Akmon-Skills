@@ -121,4 +121,4 @@ configurations.
     [JSON Configurations Guide](./docs/json_configs.md).
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

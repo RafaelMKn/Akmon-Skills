@@ -93,4 +93,4 @@ python skills/n8n-manager/scripts/n8n_api.py get-execution <ID> [--include-data]
 - **Tratamento de Erros**: O script retornará JSON no stderr se houver erro (por exemplo, erro HTTP da API ou erro de sintaxe do JSON).
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

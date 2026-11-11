@@ -956,4 +956,4 @@ This skill includes:
 - [CodeSandbox Templates](https://codesandbox.io/s/framer-motion-examples) - Live demos
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

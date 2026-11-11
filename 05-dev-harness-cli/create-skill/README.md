@@ -511,4 +511,4 @@ Before finalizing a skill, verify:
 - [ ] No Windows-style paths
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

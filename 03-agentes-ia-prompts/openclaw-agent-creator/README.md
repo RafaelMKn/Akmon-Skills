@@ -100,4 +100,4 @@ To enable channels for the new agent, adjust the `openclaw.json` config:
 3.  **Model Configuration:** Define the primary execution model (default: `anthropic/claude-3-5-sonnet`) and fallback options.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

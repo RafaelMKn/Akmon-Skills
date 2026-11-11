@@ -31,4 +31,4 @@ Total de skills nesta categoria: **23**
 | **[`using-n8n-mcp-skills`](using-n8n-mcp-skills/SKILL.md)** | Entry point for building, editing, validating, testing, or debugging n8n workflows through n8n-mcp. Use before any n8n workflow, node, expression, credential, Code node, or automation task so it can route the work to the relevant specialist skill and current live tools. |
 
 ---
-*Skills Library*
+*Akmon Skills*

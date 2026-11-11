@@ -481,4 +481,4 @@ const springs = useSpring({ x: 100, rotation: 45 })
 **Physics vs Timeline**: Use React Spring for natural, physics-based motion that responds to user input. Use GSAP for precise, timeline-based choreography and complex multi-step sequences.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

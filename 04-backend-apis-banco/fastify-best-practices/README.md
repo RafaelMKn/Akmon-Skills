@@ -105,4 +105,4 @@ Read individual rule files for detailed explanations and code examples:
 - **Minimal dependencies**: Prefer Fastify's built-in features and official plugins
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

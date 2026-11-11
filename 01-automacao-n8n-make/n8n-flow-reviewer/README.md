@@ -52,4 +52,4 @@ Entregue lista ordenada por severidade, em PT-BR:
 Para cada item: nó afetado, problema em uma frase, correção recomendada. Termine com veredito: **apto para ativar** ou **bloqueado por N críticos**.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

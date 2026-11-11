@@ -233,4 +233,4 @@ references/client-methods.md     - $connect, $disconnect, $on, $extends
 Pick the category from the table above, then open the matching reference file for implementation details and examples.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

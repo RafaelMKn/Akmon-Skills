@@ -29,4 +29,4 @@ Use this skill only when the user explicitly invokes `/shell`.
 - Then briefly report the exit status and any important stdout or stderr.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

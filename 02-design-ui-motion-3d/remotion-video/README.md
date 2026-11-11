@@ -231,4 +231,4 @@ Config.setCodec("h264");
 - `references/render-and-pipeline.md` — `auto-editor` + ffmpeg silence commands, the full render flag matrix, headless/CI render, the codec table, and `ffprobe` verification.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

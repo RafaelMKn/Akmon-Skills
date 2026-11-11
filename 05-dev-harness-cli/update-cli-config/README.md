@@ -89,4 +89,4 @@ These are internal/cached state and should not be edited manually:
 - `conversationClassificationScoredConversations` — internal cache
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

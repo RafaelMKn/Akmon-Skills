@@ -129,4 +129,4 @@ useful inline and adjust if needed.
 > room instead.
 
 ---
-*Parte da [Skills Library](../../README.md)*
+*Parte da [Akmon Skills](../../README.md)*

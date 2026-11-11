@@ -45,4 +45,4 @@ Total de skills nesta categoria: **37**
 | **[`youtube-content`](youtube-content/SKILL.md)** | YouTube transcripts to summaries, threads, blogs. |
 
 ---
-*Skills Library*
+*Akmon Skills*
