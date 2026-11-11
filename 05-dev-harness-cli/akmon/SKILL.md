@@ -47,7 +47,7 @@ no índice de skills do system prompt **não existe** nesta instalação: não a
    - **Verbo:** criar, corrigir, revisar/auditar, investigar, operar servidor, publicar, pesquisar.
    - **Estado:** produção (cliente real) ou novo/laboratório. Produção puxa as skills com gates
      (`n8n-correcao-producao`, `infra-vps-producao`, `n8n-servidor-vps`).
-2. **Escolher UMA principal** pela tabela de desambiguação abaixo + índice do system prompt, só entre
+2. **Escolher UMA principal** pela tabela de desambiguação e pela rota por intenção abaixo + índice do system prompt, só entre
    skills instaladas. Empate:
    a mais específica (a que cita o sistema pelo nome) vence. No máximo 2 de apoio.
 3. **Anunciar em uma linha**, sem narrar:
@@ -97,6 +97,45 @@ no índice de skills do system prompt **não existe** nesta instalação: não a
 | Trocar modelo/effort/fallback | `hermes-roteamento-modelos` | `hermes-agent` |
 | Decisão em aberto, escopo indefinido | `grilling` | `grill-with-docs` (gera ADR) |
 
+## Rota por intenção (skills sem par parecido)
+
+Fora da Desambiguação acima: uma linha por área, com todas as skills dela. O que cada uma faz está em
+`references/mapa.md`. `scripts/checar_mapa.py` exige que toda skill instalada apareça aqui ou na tabela acima.
+
+| Pedido | Skill |
+|---|---|
+| Word, planilha, PDF ou slides | `docx` (Word), `xlsx` (Excel/CSV), `pdf` (criar, ler, juntar, OCR), `powerpoint` (.pptx) |
+| E-mail: triagem, rascunho, IMAP no terminal | `email-inbox-triage` (triagem e rascunhos), `himalaya` (IMAP/SMTP) |
+| Google Docs/Drive/Sheets via gws CLI | `google-workspace` |
+| Box, X/Twitter, mapas e rotas | `box`, `xurl` (X/Twitter), `maps` (geocoding, rotas) |
+| Reunião, ata ou documento longo em ações | `meeting-action-items`, `document-to-action-items`, `teams-meeting-pipeline` (Teams) |
+| Revisão semanal, notas | `weekly-review-planning`, `obsidian` |
+| Monitorar preço ou concorrente | `product-price-monitor`, `competitor-news-monitor` |
+| Pesquisa: tendência, paper, fonte, wiki | `last30days` (últimos 30 dias), `arxiv` (papers), `grounded-citations` (fontes verificáveis), `llm-wiki` (base markdown) |
+| Página que falha (403, paywall, WAF) | `blocked-page-recovery` |
+| YouTube, GIF, áudio, música | `youtube-content`, `gif-search`, `songsee` (espectrograma), `songwriting-and-ai-music` (Suno) |
+| Vídeo e animação (ASCII, Manim, filme de marca) | `ascii-video`, `manim-video` (matemática/algoritmo), `motionmaxxing` (filme motion com direção de marca) |
+| Diagrama, infográfico, arte generativa | `architecture-diagram` (SVG), `baoyu-infographic`, `p5js` |
+| Design tokens, referência visual, HTML editorial | `design-md`, `design-system-extraction` (copiar estilo de site), `design-dna` (identidade de referência), `popular-web-designs` (54 design systems), `editorial-html-content` (portal/reportagem), `product-visual-exploration` (produto físico) |
+| Animação e 3D no código web | `animated-component-libraries` (React pronto), `canvas` (IDE), `generative_ui` (widget no chat), `gsap-scrolltrigger` (scroll), `lightweight-3d-effects` (Zdog/Vanta), `lottie-animations`, `modern-web-design` (tendências), `motion-framer` (React), `react-spring-physics` (física), `react-three-fiber` (3D em React), `scroll-reveal-libraries` (AOS), `threejs-webgl` (3D sem React), `web3d-integration-patterns` (mistura de libs) |
+| Texto e marca: anúncio, tom humano, nome | `ad-creative` (anúncio pago), `humanizer` (tira cara de IA), `naming` (nome de produto/marca) |
+| Carreira, cliente, ideia de negócio | `carreira-e-posicionamento` (currículo/LinkedIn), `curriculo-blindado` (banca de 7 avaliadores), `relatorio-resultados-cliente`, `pauta-definicao-cliente` (reunião com cliente travado), `shark-tank` (estressar ideia) |
+| Só macOS | `apple-notes`, `apple-reminders`, `findmy`, `imessage` |
+| Notion fora dos casos acima | `notion-view-presentation` (enxugar visualização), `notion-reestruturacao-workspace` (reestruturar workspace) |
+| n8n: Code node, binário, erro, subfluxo, entrada MCP | `n8n-code-javascript` (JS), `n8n-code-python` (Python), `n8n-code-tool` (tool de código do agente), `n8n-binary-and-data` (arquivos/binário), `n8n-error-handling` (retry, DLQ), `n8n-subworkflows`, `using-n8n-mcp-skills` (porta de entrada MCP) |
+| Make, ClickUp, Airtable | `make-manager`, `clickup-api`, `airtable` |
+| GoHighLevel | `ghl-prompt-flows` (prompts e workflows) |
+| API de cliente, WhatsApp | `integracao-api-terceiros` (CRM/ERP de cliente), `whatsapp-baileys-local` (envio pela bancada local), `evolution-podman-local` (Evolution API local) |
+| Backend: Fastify, OAuth, Prisma | `fastify-best-practices`, `oauth`, `prisma-cli`, `prisma-client-api` |
+| Postgres e Supabase: orçamento, privilégio, ACL | `pg-budget-reservation-ledger` (orçamento diário), `postgres-least-privilege-api-tests` (privilégio e locks), `supabase-sql-permission-probes` (ACL) |
+| QA e teste | `qa-chrome` (PR com navegador), `dogfood` (QA exploratório), `test-driven-development` (TDD), `chromium-print-regression` (CSS de impressão), `previa-carregamento-regressao` (tela de loading), `storage-timeout-profiling` (timeout de storage) |
+| Código: spike, limpar, medir, domínio, GitHub | `spike` (experimento descartável), `simplify-code`, `codebase-inspection` (LOC), `domain-modeling` (CONTEXT/ADR), `github` (gh CLI), `permissioned-github` (GitHub com permissão), `babysit` (PR até merge), `split-to-prs` (dividir em PRs), `doit` (/doit), `sdlc-review` (exige kanban) |
+| Agentes e CLIs: criar, controlar, cota | `openclaw-agent-creator`, `opencode` (CLI externo), `computer-use` (desktop), `create-subagent`, `agent-session-handoff` (sessão viva), `ia-quota-monitor` (cotas), `sdk` (SDK TypeScript) |
+| Skills e Hermes: achar, criar, migrar, configurar | `skill-finder`, `hermes-agent-skill-authoring` (skill no repo do Hermes), `inspecting-hermes-desktop-dom`, `hermes-voz`, `maintaining-custom-forks`, `create-skill`, `create-hook`, `create-rule`, `migrate-to-skills`, `migrate-workflows`, `update-cli-config`, `update-cursor-settings`, `statusline`, `loop`, `shell` (/shell) |
+| Antigravity | `agy-customizations`, `antigravity-guide` |
+| Linux e pasta de projetos | `linux-power-management`, `linux-desktop-customization`, `linux-app-management`, `linux-memory-swap-tuning`, `linux-audio-pipewire`, `limpeza-workspace-dev` |
+| Contexto de projeto, dados públicos, briefing | `guia-contexto-projeto`, `documentos-dados-publicos` (lote de bases oficiais) |
+
 ## Cadeias frequentes
 
 - **Fluxo em produção quebrado:** `radar-n8n` → `incident-forensics` → `n8n-correcao-producao`.
@@ -122,5 +161,5 @@ no índice de skills do system prompt **não existe** nesta instalação: não a
 
 - Pedido de tarefa → resposta começa com `Skill: ...` ou `Nenhuma skill cobre isso`.
 - A skill anunciada foi carregada com `skill_view` antes de agir.
-- `checar_mapa.py` retorna `OK` (exit 0) depois de qualquer atualização do mapa ou deste arquivo.
+- `checar_mapa.py` retorna `OK` (exit 0) depois de qualquer atualização do mapa ou deste arquivo: toda skill instalada está no mapa **e** na triagem (Desambiguação ou Rota por intenção).
 - Depois de adaptar ao usuário: nenhuma skill citada aqui falta na instalação dele.

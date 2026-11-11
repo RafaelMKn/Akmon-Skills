@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Compara as skills instaladas em ~/.hermes/skills com as citadas pelo akmon.
+"""Confere as skills instaladas contra o mapa e a triagem desta skill.
 
 Confere dois arquivos: references/mapa.md (linhas `| `nome` | ... |`) e as tabelas/cadeias do
 SKILL.md (linhas que começam com `|` ou contêm `→`).
 Saída: 'OK' quando bate (exit 0); senão (exit 1) lista
-  NAO MAPEADA      instalada e ausente do mapa;
-  ORFA NO MAPA     citada no mapa e não instalada;
-  ORFA NO SKILL.md citada na Desambiguação/Cadeias e não instalada.
+  NAO MAPEADA        instalada e ausente do mapa;
+  ORFA NO MAPA       citada no mapa e não instalada;
+  ORFA NO SKILL.md   citada na triagem e não instalada;
+  FORA DA TRIAGEM    instalada e sem nenhuma linha nas tabelas/cadeias do SKILL.md.
 Uso: checar_mapa.py [pasta-de-skills]   (padrão: ~/.hermes/skills). Somente stdlib.
 """
 import os
@@ -19,7 +20,8 @@ SKILLS = Path(sys.argv[1]).expanduser() if len(sys.argv) > 1 else HOME / "skills
 RAIZ = Path(__file__).resolve().parent.parent
 MAPA = RAIZ / "references" / "mapa.md"
 SKILL_MD = RAIZ / "SKILL.md"
-IGNORAR = {"akmon"}
+IGNORAR = {RAIZ.name}
+FERRAMENTAS = {"delegate_task"}  # ferramentas citadas nas cadeias, não são skills
 
 
 def nome_da_skill(p: Path):
@@ -40,24 +42,27 @@ for p in SKILLS.rglob("SKILL.md"):
 
 mapeadas = set(re.findall(r"^\| `([\w.-]+)` \|", MAPA.read_text(encoding="utf-8"), re.M))
 
-# Nomes de skill citados nas tabelas e cadeias do SKILL.md (tokens sem ponto, barra ou sublinhado)
+# Nomes de skill citados nas tabelas e cadeias do SKILL.md
 citadas = set()
 for linha in SKILL_MD.read_text(encoding="utf-8").splitlines():
     if linha.startswith("|") or "→" in linha:
-        citadas |= set(re.findall(r"`([a-z0-9][a-z0-9-]*)`", linha))
-citadas -= IGNORAR
+        citadas |= set(re.findall(r"`([a-z0-9_][a-z0-9_.-]*)`", linha))
+citadas -= IGNORAR | FERRAMENTAS
 
 faltando = sorted(instaladas - mapeadas)
 orfas = sorted(mapeadas - instaladas)
 orfas_skill = sorted(citadas - instaladas)
-print(f"instaladas={len(instaladas)} mapeadas={len(mapeadas)} citadas_no_skill_md={len(citadas)}")
+fora = sorted(instaladas - citadas)
+print(f"instaladas={len(instaladas)} mapeadas={len(mapeadas)} na_triagem={len(instaladas & citadas)}")
 for n in faltando:
     print(f"NAO MAPEADA: {n}")
 for n in orfas:
     print(f"ORFA NO MAPA: {n}")
 for n in orfas_skill:
     print(f"ORFA NO SKILL.md: {n}")
-if not (faltando or orfas or orfas_skill):
+for n in fora:
+    print(f"FORA DA TRIAGEM: {n}")
+if not (faltando or orfas or orfas_skill or fora):
     print("OK")
 else:
     sys.exit(1)

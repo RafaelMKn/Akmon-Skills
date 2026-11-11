@@ -79,11 +79,12 @@ A saída diz o que ajustar:
 |---|---|
 | `ORFA NO MAPA: x` | Apague a linha de `x` em `references/mapa.md` |
 | `NAO MAPEADA: x` | Leia o `SKILL.md` de `x` e acrescente a linha `\| \`x\` \| faz \| chame quando \|` na seção certa do mapa, com texto tirado da descrição real (não do nome) |
-| `ORFA NO SKILL.md: x` | Edite a Desambiguação/Cadeias, abaixo |
+| `ORFA NO SKILL.md: x` | Edite a Desambiguação, a Rota por intenção ou as Cadeias, abaixo |
+| `FORA DA TRIAGEM: x` | Acrescente `x` à linha da área dele na Rota por intenção (ou crie a linha) |
 
 Edição do `SKILL.md` (mostre o diff ao usuário):
 
-1. **Desambiguação:** apague a linha cuja skill principal não está instalada. Na coluna "Não é",
+1. **Desambiguação e Rota por intenção:** apague (na Rota, tire só a skill ausente; apague a linha se a área ficar vazia) a linha cuja skill principal não está instalada. Na coluna "Não é",
    tire a menção a skill ausente. Linha com texto genérico ("skill do seu ambiente", "skill do
    projeto") ou sem skill instalada correspondente: troque pela skill instalada que cumpre o papel
    ou remova.
