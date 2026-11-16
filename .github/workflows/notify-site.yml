@@ -1,0 +1,38 @@
+name: Notificar catálogo do site Akmon
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '0*/**'
+
+# Não lê o repositório e não usa o GITHUB_TOKEN para o dispatch cross-repo.
+permissions: {}
+
+concurrency:
+  group: akmon-notificacao
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    name: Disparar atualização do catálogo
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Enviar skills-updated para akmon-site
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.AKMON_SITE_DISPATCH_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            printf '%s\n' '::error::Secret AKMON_SITE_DISPATCH_TOKEN ausente.'
+            exit 1
+          fi
+          jq -n --arg sha "$SOURCE_SHA" \
+            '{event_type: "skills-updated", client_payload: {sha: $sha}}' \
+            | gh api --method POST repos/RafaelMKn/akmon-site/dispatches \
+                -H 'Accept: application/vnd.github+json' \
+                -H 'X-GitHub-Api-Version: 2022-11-28' \
+                --input -
+          printf 'Dispatch skills-updated enviado; commit fonte: %s\n' "$SOURCE_SHA" >> "$GITHUB_STEP_SUMMARY"
