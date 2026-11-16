@@ -22,7 +22,7 @@ Funciona em Claude Code, Codex, Antigravity, Hermes e outros harnesses (a receit
 Leia o documento abaixo e siga o que está nele, fase por fase, na ordem:
 https://raw.githubusercontent.com/RafaelMKn/skills-library/main/05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md
 
-(Se o repositório skills-library já estiver clonado nesta máquina, leia o arquivo local:
+(Se o repositório Akmon-skills já estiver clonado nesta máquina, leia o arquivo local:
 05-dev-harness-cli/akmon/references/adaptar-ao-usuario.md.)
 
 Resumo do que você vai fazer: me entrevistar, uma pergunta por vez, para entender como eu trabalho;
