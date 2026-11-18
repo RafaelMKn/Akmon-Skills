@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-17",
+  "categories": [
+    { "id": "geral", "name": "Geral", "description": "Skills sem categoria definida" }
+  ],
+  "sources": [],
+  "skills": []
+}
