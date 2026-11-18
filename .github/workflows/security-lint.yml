@@ -1,0 +1,324 @@
+name: Segurança e lint
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seguranca-lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Não instala dependências do repositório nem executa scripts das skills.
+# Refs e mensagens de contribuidores são dados, nunca código de shell.
+env:
+  BASE_SHA: ${{ github.event.pull_request.base.sha }}
+  HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  BEFORE_SHA: ${{ github.event.before }}
+
+jobs:
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Instalar gitleaks oficial com checksum fixado
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools=$(mktemp -d "$RUNNER_TEMP/gitleaks.XXXXXX")
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz \
+            -o "$tools/gitleaks.tar.gz"
+          printf '%s  %s\n' \
+            9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c \
+            "$tools/gitleaks.tar.gz" | sha256sum --check --strict
+          tar -xzf "$tools/gitleaks.tar.gz" -C "$tools" gitleaks
+          printf '%s\n' "$tools" >> "$GITHUB_PATH"
+      - name: Varrer commits sem permitir exceções vindas do PR
+        shell: bash
+        run: |
+          python3 -I - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import tempfile
+
+          temp = Path(os.environ['RUNNER_TEMP'])
+          config = temp / 'gitleaks-default.toml'
+          config.write_text('[extend]\nuseDefault = true\n')
+          report = temp / 'gitleaks-report.json'
+          report.unlink(missing_ok=True)
+          # A flag recebe arquivo confiável; o ignore da fonte é neutralizado abaixo.
+          ignore = temp / 'gitleaks-empty.ignore'
+          ignore.write_text('')
+          event = os.environ['GITHUB_EVENT_NAME']
+          head = os.environ['HEAD_SHA']
+          base = os.environ.get('BASE_SHA', '')
+          assert re.fullmatch(r'[0-9a-f]{40}', head), 'SHA de origem inválido'
+          flags = ['--config', str(config), '--gitleaks-ignore-path', str(ignore),
+                   '--ignore-gitleaks-allow', '--redact', '--no-banner',
+                   '--report-format', 'json', '--report-path', str(report)]
+          if event == 'pull_request':
+              assert re.fullmatch(r'[0-9a-f]{40}', base), 'SHA base inválido'
+              command = ['gitleaks', 'git', '--log-opts', f'-m --text --no-textconv {base}..{head}', *flags, '.']
+              scope = 'commits do PR'
+          elif event == 'push':
+              before = os.environ.get('BEFORE_SHA', '')
+              assert re.fullmatch(r'[0-9a-f]{40}', before), 'SHA anterior inválido'
+              exists = before != '0' * 40 and subprocess.run(
+                  ['git', 'cat-file', '-e', f'{before}^{{commit}}'],
+                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+              if exists:
+                  options = f'-m --text --no-textconv {before}..{head}'
+                  scope = 'todos os commits do push (before..sha)'
+              else:
+                  options = f'-1 --first-parent -m --text --no-textconv {head}'
+                  scope = 'commit do push: fallback para before zero ou ausente no clone'
+              command = ['gitleaks', 'git', '--log-opts', options, *flags, '.']
+          else:
+              command = ['gitleaks', 'dir', *flags, '.']
+              scope = 'árvore completa'
+          # v8.24.3 também importa source/.gitleaksignore, independentemente da flag.
+          # Renomeia apenas no checkout descartável e restaura sempre. O conteúdo
+          # continua visível no scan dir, mas não é interpretado como exceções.
+          source_ignore = Path('.gitleaksignore')
+          backup = None
+          if os.path.lexists(source_ignore):
+              fd, name = tempfile.mkstemp(prefix='.gitleaksignore-scan-', dir='.')
+              os.close(fd)
+              backup = Path(name)
+              source_ignore.replace(backup)
+          try:
+              result = subprocess.run(command, check=False)
+          finally:
+              if backup is not None:
+                  backup.replace(source_ignore)
+          if result.returncode not in (0, 1):
+              raise SystemExit(result.returncode)
+          # A ausência/corrupção do relatório nunca pode virar um scan verde.
+          findings = json.loads(report.read_text())
+          # Exceções exatas, revisadas pelo maintainer; nunca lidas do PR.
+          # Os dois primeiros são nomes sess….png de exemplo; o terceiro é dado fictício de teste.
+          known_false_positives = {
+              '01-automacao-n8n-make/n8n-binary-and-data/AGENT_TOOL_BINARY.md:generic-api-key:51',
+              '01-automacao-n8n-make/n8n-binary-and-data/AGENT_TOOL_BINARY.md:generic-api-key:153',
+              '05-dev-harness-cli/last30days-skill/tests/test_setup_wizard.py:generic-api-key:436',
+          }
+          # .gitleaksignore e comentários gitleaks:allow do PR continuam proibidos pelas flags.
+          remaining = [item for item in findings if item.get('Fingerprint') not in known_false_positives]
+          report.write_text(json.dumps(remaining, indent=2))
+          count = len(remaining)
+          ignored = len(findings) - count
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f'### gitleaks\nEscopo: {scope}. Achados brutos: **{len(findings)}**. '
+                            f'Exceções fixas: **{ignored}**. Restantes: **{count}**.\n')
+          raise SystemExit(1 if count else 0)
+          PY
+
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Instalar ShellCheck 0.10.0 com checksum fixado
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools=$(mktemp -d "$RUNNER_TEMP/shellcheck.XXXXXX")
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz \
+            -o "$tools/shellcheck.tar.xz"
+          printf '%s  %s\n' \
+            6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87 \
+            "$tools/shellcheck.tar.xz" | sha256sum --check --strict
+          tar -xJf "$tools/shellcheck.tar.xz" -C "$tools" shellcheck-v0.10.0/shellcheck
+          printf '%s\n' "$tools/shellcheck-v0.10.0" >> "$GITHUB_PATH"
+      - name: Analisar shell alterado no PR (legado apenas informativo)
+        shell: bash
+        run: |
+          python3 -I - <<'PY'
+          import html
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+
+          def git(*args):
+              return subprocess.check_output(['git', *args])
+
+          event = os.environ['GITHUB_EVENT_NAME']
+          if event == 'pull_request':
+              base, head = os.environ['BASE_SHA'], os.environ['HEAD_SHA']
+              assert all(re.fullmatch(r'[0-9a-f]{40}', s) for s in (base, head))
+              names = git('diff', '--name-only', '-z', '--diff-filter=ACMRT', f'{base}...{head}')
+          else:
+              names = git('ls-files', '-z')
+          files = []
+          for raw in names.split(b'\0'):
+              if not raw:
+                  continue
+              path = Path(os.fsdecode(raw))
+              # Não segue links simbólicos para dentro ou fora da árvore.
+              if path.is_symlink() or not path.is_file():
+                  continue
+              with path.open('rb') as source:
+                  first = source.readline(4096)
+              if path.suffix == '.sh' or re.search(rb'^#![^\n]*\b(?:bash|sh)(?:\s|$)', first):
+                  files.append(str(path))
+          count = 0
+          errors = []
+          for file in files:
+              result = subprocess.run(['shellcheck', '--norc', '--severity=warning',
+                                       '--format=json', '--', file], capture_output=True, text=True, encoding='utf-8', errors='replace')
+              if result.returncode not in (0, 1):
+                  errors.append(f'{file!r}: ferramenta falhou (código {result.returncode})')
+                  continue
+              findings = json.loads(result.stdout)
+              count += len(findings)
+              for item in findings:
+                  print(f'{file!r}:{item["line"]}: SC{item["code"]}: {item["message"]}')
+          mode = 'bloqueante no PR' if event == 'pull_request' else 'informativo: legado não bloqueia'
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f'### ShellCheck\nArquivos: **{len(files)}**. Achados (warning/error): **{count}**. {mode}.\n')
+              for error in errors:
+                  summary.write(f'<pre>{html.escape(error)}</pre>\n')
+          # Falhas operacionais nunca são escondidas como ausência de achados.
+          raise SystemExit(1 if errors or (event == 'pull_request' and count) else 0)
+          PY
+
+  ruff:
+    name: ruff
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Instalar Ruff 0.11.13 oficial com checksum fixado
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools=$(mktemp -d "$RUNNER_TEMP/ruff.XXXXXX")
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-x86_64-unknown-linux-gnu.tar.gz \
+            -o "$tools/ruff.tar.gz"
+          printf '%s  %s\n' \
+            01aa32d29d00876b8d1429c617ed63a00b1fc81abfa4183bb05c9cb647fbc3d0 \
+            "$tools/ruff.tar.gz" | sha256sum --check --strict
+          tar -xzf "$tools/ruff.tar.gz" -C "$tools" ruff-x86_64-unknown-linux-gnu/ruff
+          printf '%s\n' "$tools/ruff-x86_64-unknown-linux-gnu" >> "$GITHUB_PATH"
+      - name: Analisar Python alterado no PR (legado apenas informativo)
+        shell: bash
+        run: |
+          python3 -I - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+
+          def git(*args):
+              return subprocess.check_output(['git', *args])
+
+          event = os.environ['GITHUB_EVENT_NAME']
+          if event == 'pull_request':
+              base, head = os.environ['BASE_SHA'], os.environ['HEAD_SHA']
+              assert all(re.fullmatch(r'[0-9a-f]{40}', s) for s in (base, head))
+              names = git('diff', '--name-only', '-z', '--diff-filter=ACMRT', f'{base}...{head}')
+          else:
+              names = git('ls-files', '-z')
+          files = []
+          for raw in names.split(b'\0'):
+              if not raw:
+                  continue
+              path = Path(os.fsdecode(raw))
+              if path.suffix == '.py' and path.is_file() and not path.is_symlink():
+                  files.append(str(path))
+          count = 0
+          failed = False
+          if files:
+              # --isolated impede configuração/plugins do PR; nenhum Python é importado.
+              result = subprocess.run(['ruff', 'check', '--isolated', '--no-cache',
+                                       '--output-format=json', '--', *files], capture_output=True, text=True, encoding='utf-8', errors='replace')
+              if result.returncode not in (0, 1):
+                  failed = True
+                  print(f'Ruff falhou operacionalmente: código {result.returncode}')
+              else:
+                  findings = json.loads(result.stdout)
+                  count = len(findings)
+                  for item in findings:
+                      print(f'{item["filename"]!r}:{item["location"]["row"]}: {item["code"]}: {item["message"]}')
+          mode = 'bloqueante no PR' if event == 'pull_request' else 'informativo: legado não bloqueia'
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f'### Ruff\nArquivos: **{len(files)}**. Achados: **{count}**. {mode}.\n')
+              if failed:
+                  summary.write('Falha operacional do linter; consulte o log.\n')
+          raise SystemExit(1 if failed or (event == 'pull_request' and count) else 0)
+          PY
+
+  dco:
+    name: dco
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Conferir assinatura DCO de cada autor do PR
+        shell: bash
+        run: |
+          python3 -I - <<'PY'
+          import os
+          import re
+          import subprocess
+
+          def git(*args):
+              return subprocess.check_output(['git', *args]).decode('utf-8', errors='replace')
+
+          if os.environ['GITHUB_EVENT_NAME'] != 'pull_request':
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                  summary.write('### DCO\nNão aplicável: verificação de commits exclusiva do PR.\n')
+              raise SystemExit(0)
+          base, head = os.environ['BASE_SHA'], os.environ['HEAD_SHA']
+          assert all(re.fullmatch(r'[0-9a-f]{40}', s) for s in (base, head))
+          commits = git('rev-list', '--reverse', f'{base}..{head}').splitlines()
+          invalid = []
+          for commit in commits:
+              author, email, message = git('show', '-s', '--format=%an%x00%ae%x00%B', commit).split('\0', 2)
+              expected = f'Signed-off-by: {author} <{email}>'
+              if not author.strip() or not re.fullmatch(r'[^\s<>@]+@[^\s<>@]+', email):
+                  invalid.append(commit)
+              elif expected not in message.splitlines():
+                  invalid.append(commit)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f'### DCO\nCommits conferidos: **{len(commits)}**. Sem assinatura do autor: **{len(invalid)}**.\n')
+              if invalid:
+                  summary.write('Correção (preservando o autor): `git rebase --signoff main` e `git push --force-with-lease`.\n')
+          if invalid:
+              print('::error::DCO ausente ou diferente do autor nos commits: ' + ', '.join(invalid))
+              print('Corrija com git rebase --signoff main e git push --force-with-lease. Preserve nome e e-mail do autor.')
+              raise SystemExit(1)
+          PY
