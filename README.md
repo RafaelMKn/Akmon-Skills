@@ -151,8 +151,8 @@ Skills para engenharia de software (TDD, debugging sistemático, code review, sp
 | Skill | Resumo |
 |---|---|
 | **[`agent-session-handoff`](05-dev-harness-cli/agent-session-handoff/SKILL.md)** | Use when forwarding instructions to a live agent session. |
-| **[`agy-customizations`](05-dev-harness-cli/agy-customizations/SKILL.md)** | Comprehensive guide and reference for the Antigravity Customization System. Use to explain how customizations work, thei... |
-| **[`antigravity_guide`](05-dev-harness-cli/antigravity_guide/SKILL.md)** | Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity (AGY), including the Antigravity CLI... |
+| **[`antigravity-personalizacao`](05-dev-harness-cli/antigravity-personalizacao/SKILL.md)** | Orienta e cria customizações do agente Antigravity (regras, skills, plugins, hooks e servidores MCP), indicando onde cad... |
+| **[`antigravity-referencia`](05-dev-harness-cli/antigravity-referencia/SKILL.md)** | Responde dúvidas de uso do Antigravity (CLI agy, IDE, aplicativo 2.0 e SDK Python) combinando um mapa offline com a docu... |
 | **[`auditoria-infra-hospedagem`](05-dev-harness-cli/auditoria-infra-hospedagem/SKILL.md)** | Use when auditing a hosting account: cost, waste, DNS. |
 | **[`babysit`](05-dev-harness-cli/babysit/SKILL.md)** | Keep a PR merge-ready by triaging comments, resolving clear conflicts, and fixing CI in a loop. |
 | **[`blocked-page-recovery`](05-dev-harness-cli/blocked-page-recovery/SKILL.md)** | Use when a fetch fails: 403/429, paywall, WAF, bot wall. |
@@ -160,9 +160,9 @@ Skills para engenharia de software (TDD, debugging sistemático, code review, sp
 | **[`claude-code`](05-dev-harness-cli/claude-code/SKILL.md)** | Delegate coding to Claude Code CLI (features, PRs). |
 | **[`codebase-inspection`](05-dev-harness-cli/codebase-inspection/SKILL.md)** | Inspect codebases w/ pygount: LOC, languages, ratios. |
 | **[`codex`](05-dev-harness-cli/codex/SKILL.md)** | Delegate coding to OpenAI Codex CLI (features, PRs). |
-| **[`create-hook`](05-dev-harness-cli/create-hook/SKILL.md)** | Create Codex hooks. Use when you want to create a hook, write hooks.json, add hook scripts, or automate behavior around ... |
-| **[`create-rule`](05-dev-harness-cli/create-rule/SKILL.md)** | Create Codex rules for persistent AI guidance. Use when you want to create a rule, add coding standards, set up project ... |
-| **[`create-skill`](05-dev-harness-cli/create-skill/SKILL.md)** | Create Codex Agent Skills. Use when authoring a new skill or asking about SKILL.md structure. |
+| **[`cursor-hooks`](05-dev-harness-cli/cursor-hooks/SKILL.md)** | Cria e edita hooks do Cursor (hooks.json mais scripts ou verificações em prompt) que auditam, bloqueiam, reescrevem entr... |
+| **[`cursor-rules`](05-dev-harness-cli/cursor-rules/SKILL.md)** | Cria regras persistentes do Cursor em arquivos .mdc dentro de .cursor/rules/, escolhendo entre regra sempre ativa, por t... |
+| **[`cursor-skill-authoring`](05-dev-harness-cli/cursor-skill-authoring/SKILL.md)** | Guia a criação de skills de agente para o Cursor (pasta com SKILL.md, frontmatter, descrição, corpo e arquivos de apoio)... |
 | **[`delegated-cli-runtime`](05-dev-harness-cli/delegated-cli-runtime/SKILL.md)** | Use when integrating a structured external agent CLI. |
 | **[`dogfood`](05-dev-harness-cli/dogfood/SKILL.md)** | Exploratory QA of web apps: find bugs, evidence, reports. |
 | **[`doit`](05-dev-harness-cli/doit/SKILL.md)** | Use when told /doit: implement approved doc via subagents. |
@@ -192,7 +192,7 @@ Skills para engenharia de software (TDD, debugging sistemático, code review, sp
 | **[`linux-power-management`](05-dev-harness-cli/linux-power-management/SKILL.md)** | Use when diagnosing Linux power, heat, fan, or CPU. |
 | **[`loop`](05-dev-harness-cli/loop/SKILL.md)** | Run a prompt or skill on a recurring local interval using monitored background shell output. Use for /loop, polling stat... |
 | **[`maintaining-custom-forks`](05-dev-harness-cli/maintaining-custom-forks/SKILL.md)** | Use when maintaining a production fork with custom code. |
-| **[`migrate-to-skills`](05-dev-harness-cli/migrate-to-skills/SKILL.md)** | Convert 'Applied intelligently' Codex rules (.cursor/rules/*.mdc) and slash commands (.cursor/commands/*.md) to Agent Sk... |
+| **[`cursor-migracao-para-skills`](05-dev-harness-cli/cursor-migracao-para-skills/SKILL.md)** | Converte regras do Cursor aplicadas pelo agente (.mdc sem globs e sem alwaysApply) e comandos de barra (.md) para skills... |
 | **[`migrate-workflows`](05-dev-harness-cli/migrate-workflows/SKILL.md)** | Automatically migrate legacy workflows to modern skills across global and workspace configurations. Scans for existing w... |
 | **[`node-inspect-debugger`](05-dev-harness-cli/node-inspect-debugger/SKILL.md)** | Debug Node.js via --inspect + Chrome DevTools Protocol CLI. |
 | **[`opencode`](05-dev-harness-cli/opencode/SKILL.md)** | Delegate coding to OpenCode CLI (features, PR review). |
@@ -201,19 +201,19 @@ Skills para engenharia de software (TDD, debugging sistemático, code review, sp
 | **[`python-debugpy`](05-dev-harness-cli/python-debugpy/SKILL.md)** | Debug Python: pdb REPL + debugpy remote (DAP). |
 | **[`qa-chrome`](05-dev-harness-cli/qa-chrome/SKILL.md)** | Use ao testar PRs com navegador e provas auditáveis. |
 | **[`requesting-code-review`](05-dev-harness-cli/requesting-code-review/SKILL.md)** | Pre-commit review: security scan, quality gates, auto-fix. |
-| **[`sdk`](05-dev-harness-cli/sdk/SKILL.md)** | Guide users building apps, scripts, CI pipelines, or automations on top of the Codex TypeScript SDK (`@cursor/sdk`). Use... |
+| **[`cursor-sdk-guia`](05-dev-harness-cli/cursor-sdk-guia/SKILL.md)** | Orienta integrações com o SDK TypeScript do Cursor (@cursor/sdk) para rodar agentes em scripts, CI, ações do GitHub, ser... |
 | **[`sdlc-review`](05-dev-harness-cli/sdlc-review/SKILL.md)** | Review Kanban handoffs and route verified outcomes. |
 | **[`shell`](05-dev-harness-cli/shell/SKILL.md)** | Runs the rest of a /shell request as a literal shell command. Use only when the user explicitly invokes /shell and wants... |
 | **[`simplify-code`](05-dev-harness-cli/simplify-code/SKILL.md)** | Parallel 4-agent cleanup of recent code changes. |
-| **[`skill-finder`](05-dev-harness-cli/skill-finder/SKILL.md)** | Search, install, and manage Agent Skills locally and from GitHub, then help decide whether the task really needs a skill... |
+| **[`skill-scout`](05-dev-harness-cli/skill-scout/SKILL.md)** | Procura, instala e gerencia skills de agente: pesquisa num índice local de fontes e, sob demanda, no GitHub e na web, e ... |
 | **[`spike`](05-dev-harness-cli/spike/SKILL.md)** | Throwaway experiments to validate an idea before build. |
 | **[`split-to-prs`](05-dev-harness-cli/split-to-prs/SKILL.md)** | Split current work into small reviewable PRs. Use when the user asks to split a chat, set of changes, branch, or PR. |
-| **[`statusline`](05-dev-harness-cli/statusline/SKILL.md)** | Configure a custom status line in the CLI. Use when the user mentions status line, statusline, statusLine, CLI status ba... |
+| **[`cursor-cli-statusline`](05-dev-harness-cli/cursor-cli-statusline/SKILL.md)** | Configura uma linha de status personalizada acima do prompt da CLI do Cursor (statusLine em cli-config.json, com script ... |
 | **[`storage-timeout-profiling`](05-dev-harness-cli/storage-timeout-profiling/SKILL.md)** | Use when storage-heavy tests time out. |
 | **[`systematic-debugging`](05-dev-harness-cli/systematic-debugging/SKILL.md)** | 4-phase root cause debugging: understand bugs before fixing. |
 | **[`test-driven-development`](05-dev-harness-cli/test-driven-development/SKILL.md)** | TDD: enforce RED-GREEN-REFACTOR, tests before code. |
-| **[`update-cli-config`](05-dev-harness-cli/update-cli-config/SKILL.md)** | View and modify Codex CLI configuration settings in ~/.cursor/cli-config.json. Use when the user wants to change CLI set... |
-| **[`update-cursor-settings`](05-dev-harness-cli/update-cursor-settings/SKILL.md)** | Modify Codex/VSCode user settings in settings.json. Use when you want to change editor settings, preferences, configurat... |
+| **[`cursor-cli-config`](05-dev-harness-cli/cursor-cli-config/SKILL.md)** | Consulta e altera as preferências da CLI do Cursor em ~/.cursor/cli-config.json (permissões, modo de aprovação, vim, exi... |
+| **[`cursor-editor-settings`](05-dev-harness-cli/cursor-editor-settings/SKILL.md)** | Altera as configurações do usuário do editor Cursor (settings.json do perfil de usuário), preservando o resto do arquivo... |
 
 ### [Produtividade, Pesquisa, Documentos & Mídia](06-produtividade-pesquisa-docs/README.md) (`06-produtividade-pesquisa-docs/`) — 37 skills
 
@@ -290,6 +290,20 @@ orquestração).
 
 Prefere não montar isso à mão? Use o prompt da seção do [`akmon`](#skill-padrão-editável-akmon): a sua
 IA pergunta, escolhe e instala por você.
+
+## Contribuindo
+
+Correções e skills novas são bem-vindas. Leia o [CONTRIBUTING.md](CONTRIBUTING.md): skill nova começa por uma issue, e todo commit leva assinatura DCO (`git commit -s`). Dúvidas e ideias vão em [Discussions](https://github.com/RafaelMKn/Akmon-Skills/discussions); falhas de segurança, pelo canal privado descrito em [SECURITY.md](SECURITY.md). Como a triagem funciona: [MAINTAINERS.md](MAINTAINERS.md).
+
+## Contribuidores
+
+Quem tiver contribuição mergeada aparece aqui e no campo `author` da skill.
+
+<!-- Adicionar em ordem de primeira contribuição: - [@usuario](https://github.com/usuario): skill ou contribuição -->
+
+## Licença
+
+Trabalho original sob [MIT](LICENSE) (Akmon contributors). Skills de terceiros mantêm a licença e o crédito originais: veja [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ---
 *Akmon Skills — forjado em produção.*
