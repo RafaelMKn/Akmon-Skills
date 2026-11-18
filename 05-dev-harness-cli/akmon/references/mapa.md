@@ -83,7 +83,7 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 | `hermes-roteamento-modelos` | Trocar modelo, reasoning effort e fallback (principal e delegação) | "Muda o modelo", 429 de cota, ajustar subagentes |
 | `hermes-agent-skill-authoring` | Padrões de SKILL.md no repo do Hermes | Criar skill para o repo hermes-agent |
 | `inspecting-hermes-desktop-dom` | Ler DOM/CSS do app desktop via CDP | Bug visual do Hermes desktop |
-| `skill-finder` | Buscar/instalar skills; decidir se precisa de skill | "Existe skill para X?" |
+| `skill-scout` | Buscar/instalar skills; decidir se precisa de skill | "Existe skill para X?" |
 | `hermes-voz` | Configura e depura voz e wake do Hermes | Voz/wake do Hermes não funciona ou será configurada |
 
 ## Desenvolvimento de software
@@ -235,19 +235,19 @@ O script `scripts/checar_mapa.py` lê as linhas que começam com `` | `nome` | `
 |---|---|---|
 | `notion-reestruturacao-workspace` | Reestrutura workspace Notion com segurança | Mudança estrutural no Notion |
 | `product-visual-exploration` | Explora designs e mockups de produtos físicos | Design de produto físico |
-| `agy-customizations` | Personaliza o comportamento do Antigravity: workflows, diretrizes e integrações | Configurar o Antigravity |
-| `antigravity-guide` | Guia, referência rápida e mapa do Google Antigravity (CLI, IDE, SDK) | Dúvida sobre o Antigravity |
+| `antigravity-personalizacao` | Personaliza o comportamento do Antigravity: workflows, diretrizes e integrações | Configurar o Antigravity |
+| `antigravity-referencia` | Guia, referência rápida e mapa do Google Antigravity (CLI, IDE, SDK) | Dúvida sobre o Antigravity |
 | `babysit` | Leva um PR até pronto para merge: status, comentários e CI | Destravar PR até merge |
-| `create-hook` | Cria hooks que rodam lógica antes ou depois de eventos do agente | Automação em eventos do agente |
-| `create-rule` | Cria regras persistentes de projeto em .cursor/rules/ | Regra de projeto para o agente |
-| `create-skill` | Guia para criar skills de agente bem escritas | Criar skill nova |
+| `cursor-hooks` | Cria hooks que rodam lógica antes ou depois de eventos do agente | Automação em eventos do agente |
+| `cursor-rules` | Cria regras persistentes de projeto em .cursor/rules/ | Regra de projeto para o agente |
+| `cursor-skill-authoring` | Guia para criar skills de agente bem escritas | Criar skill nova |
 | `loop` | Acorda o agente em intervalos para trabalho local recorrente | Tarefa recorrente monitorada |
-| `migrate-to-skills` | Migra workflows legados para skills modernas, com arquivo seguro | Converter workflow antigo em skill |
+| `cursor-migracao-para-skills` | Migra workflows legados para skills modernas, com arquivo seguro | Converter workflow antigo em skill |
 | `migrate-workflows` | Migra workflows legados entre configurações globais e de workspace | Migrar workflows para o novo formato |
 | `permissioned-github` | Interação com GitHub pedindo permissão quando o ambiente bloqueia | Comando GitHub bloqueado pelo ambiente |
-| `sdk` | SDK TypeScript para rodar agentes de código programaticamente | Integrar agente por código |
+| `cursor-sdk-guia` | SDK TypeScript para rodar agentes de código programaticamente | Integrar agente por código |
 | `shell` | Executa o texto após `/shell` como comando literal | Usuário pede `/shell` explicitamente |
 | `split-to-prs` | Divide um lote de trabalho em PRs pequenos, após aprovação do plano | Quebrar mudança grande em PRs |
-| `statusline` | Linha de status personalizável do CLI | Configurar a status line |
-| `update-cli-config` | Ver e alterar configurações do CLI (arquivo JSON do usuário) | Mudar config do CLI |
-| `update-cursor-settings` | Alterar settings.json do editor (tema, atalhos, preferências) | Mudar configuração do editor |
+| `cursor-cli-statusline` | Linha de status personalizável do CLI | Configurar a status line |
+| `cursor-cli-config` | Ver e alterar configurações do CLI (arquivo JSON do usuário) | Mudar config do CLI |
+| `cursor-editor-settings` | Alterar settings.json do editor (tema, atalhos, preferências) | Mudar configuração do editor |

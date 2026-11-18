@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Dúvida ou ideia em aberto / Question or open idea
+    url: https://github.com/RafaelMKn/Akmon-Skills/discussions
+    about: Use Discussions para conversar antes de virar proposta.
+  - name: 🔒 Falha de segurança / Security issue
+    url: https://github.com/RafaelMKn/Akmon-Skills/security/advisories/new
+    about: Reporte em privado. Não abra issue pública.

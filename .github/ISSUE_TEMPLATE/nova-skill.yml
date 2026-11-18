@@ -1,0 +1,70 @@
+name: ✨ Proposta de skill nova / New skill proposal
+description: Proponha uma skill antes de abrir o PR. Aguarde a label `accepted`.
+title: "[Nova skill] <nome-da-skill>"
+labels: ["new-skill", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Leia a **régua para skill nova** no [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md). Abra o PR só depois da label `accepted`.
+  - type: input
+    id: nome
+    attributes:
+      label: Nome da skill
+      description: Minúsculas e hífens; será o nome da pasta.
+    validations:
+      required: true
+  - type: dropdown
+    id: categoria
+    attributes:
+      label: Categoria
+      options:
+        - 01-automacao-n8n-make
+        - 02-design-ui-motion-3d
+        - 03-agentes-ia-prompts
+        - 04-backend-apis-banco
+        - 05-dev-harness-cli
+        - 06-produtividade-pesquisa-docs
+    validations:
+      required: true
+  - type: textarea
+    id: problema
+    attributes:
+      label: Que problema ela resolve e quando o agente deve usá-la?
+    validations:
+      required: true
+  - type: textarea
+    id: uso-real
+    attributes:
+      label: Uso real / Real-world use
+      description: Onde e como você usou essa skill na prática. Sem nomes de clientes.
+    validations:
+      required: true
+  - type: textarea
+    id: sobreposicao
+    attributes:
+      label: Sobreposição
+      description: Alguma skill do Akmon já faz algo parecido? Por que esta é diferente?
+    validations:
+      required: true
+  - type: dropdown
+    id: scripts
+    attributes:
+      label: Traz scripts executáveis?
+      options: ["Não", "Sim (vão passar por revisão linha a linha)"]
+    validations:
+      required: true
+  - type: dropdown
+    id: origem
+    attributes:
+      label: Origem e licença
+      options:
+        - Autoral, sob MIT
+        - Terceiro com licença permissiva (MIT/Apache/BSD), mantendo LICENSE e crédito
+        - Outra (explique abaixo)
+    validations:
+      required: true
+  - type: textarea
+    id: origem-detalhe
+    attributes:
+      label: Detalhe da origem (se for de terceiro, inclua o link do repo original)

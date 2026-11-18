@@ -1,0 +1,42 @@
+name: 🐛 Bug numa skill / Bug in a skill
+description: Uma skill está errada, quebrada ou se comporta diferente do que descreve.
+title: "[Bug] <skill>: <resumo>"
+labels: ["bug", "needs-triage"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      description: Caminho da pasta, ex. 05-dev-harness-cli/skill-scout
+    validations:
+      required: true
+  - type: dropdown
+    id: harness
+    attributes:
+      label: Harness
+      multiple: true
+      options: [Claude Code, Codex, Antigravity, OpenClaw, Hermes, Cursor, Outro]
+    validations:
+      required: true
+  - type: textarea
+    id: o-que-aconteceu
+    attributes:
+      label: O que aconteceu / What happened
+      description: Inclua o prompt usado e a saída. Remova segredos e dados pessoais.
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que era esperado / Expected
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmacoes
+    attributes:
+      label: Confirmações
+      options:
+        - label: Não é uma falha de segurança (essas vão para o SECURITY.md).
+          required: true
+        - label: Removi tokens, e-mails e dados de clientes do relato.
+          required: true

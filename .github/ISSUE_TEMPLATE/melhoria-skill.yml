@@ -1,0 +1,25 @@
+name: 🔧 Melhoria numa skill existente / Improve an existing skill
+description: Mudança grande numa skill existente (para correções pequenas, abra o PR direto).
+title: "[Melhoria] <skill>: <resumo>"
+labels: ["skill-fix", "needs-triage"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      description: Caminho da pasta, ex. 01-automacao-n8n-make/n8n-flow-builder
+    validations:
+      required: true
+  - type: textarea
+    id: mudanca
+    attributes:
+      label: O que mudar e por quê
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidência
+      description: Caso real em que a versão atual falhou ou ficou aquém.
+    validations:
+      required: true
