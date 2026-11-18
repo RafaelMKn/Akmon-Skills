@@ -1,0 +1,46 @@
+name: Fechar needs-info sem resposta
+
+# Só atua em issues e PRs com a label needs-info (decisão Q13 da governança).
+# Itens esperando o mantenedor nunca são fechados por aqui.
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: stale-needs-info
+  cancel-in-progress: false
+
+jobs:
+  stale:
+    name: stale
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
+        with:
+          only-labels: needs-info
+          stale-issue-label: stale
+          stale-pr-label: stale
+          days-before-stale: 23
+          days-before-close: 7
+          remove-stale-when-updated: true
+          stale-issue-message: >
+            Este item está em `needs-info` há 23 dias sem resposta. Se as informações
+            pedidas não chegarem em 7 dias, ele será fechado automaticamente.
+            Basta comentar para manter aberto.
+            / No reply for 23 days; this will be closed in 7 days unless updated.
+          close-issue-message: >
+            Fechado por falta de resposta em 30 dias. Pode reabrir quando tiver as
+            informações. / Closed after 30 days without a reply; feel free to reopen.
+          stale-pr-message: >
+            Este PR está em `needs-info` há 23 dias sem resposta. Se não houver
+            atualização em 7 dias, ele será fechado automaticamente.
+            / No reply for 23 days; this will be closed in 7 days unless updated.
+          close-pr-message: >
+            Fechado por falta de resposta em 30 dias. Pode reabrir quando quiser.
+            / Closed after 30 days without a reply; feel free to reopen.
