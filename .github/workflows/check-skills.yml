@@ -3,16 +3,8 @@ name: Validação de Estrutura das Skills (CI)
 on:
   pull_request:
     branches: [main]
-    paths:
-      - '0*/**'
-      - 'scripts/check_skills.py'
-      - '.github/workflows/check-skills.yml'
   push:
     branches: [main]
-    paths:
-      - '0*/**'
-      - 'scripts/check_skills.py'
-      - '.github/workflows/check-skills.yml'
   workflow_dispatch:
 
 permissions:
@@ -41,8 +33,12 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml
+          # Wheel CPython 3.12/Linux x86_64 conferido no PyPI; sem builds de fontes.
+          printf '%s\n' 'PyYAML==6.0.2 --hash=sha256:80bab7bfc629882493af4aa31a4cfa43a4c57c83813253626916b8c7ada83476' \
+            | python -I -m pip install --require-hashes --only-binary=:all: -r /dev/stdin
+
+      - name: Testar fronteiras e falhas do validador
+        run: python -m unittest discover -s scripts -p 'test_check_skills.py' -v
 
       - name: Executar Validador Estrutural de Skills
         run: |
