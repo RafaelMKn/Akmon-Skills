@@ -13,19 +13,45 @@ Verifica:
 import argparse
 import os
 import re
+import stat
 import sys
 from pathlib import Path
 
 try:
     import yaml
 except ImportError:
-    print("Aviso: 'pyyaml' não encontrado. Instale com 'pip install pyyaml'.", file=sys.stderr)
-    yaml = None
+    print("Erro: 'pyyaml' não encontrado. Instale a dependência fixada do CI.", file=sys.stderr)
+    raise SystemExit(2)
 
 # Expressão para checagem de links em Markdown: [texto](caminho)
 LINK_REGEX = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 MAX_FRONTMATTER_BYTES = 64 * 1024  # 64 KB
+MAX_SKILL_BYTES = 4 * 1024 * 1024  # Limite total antes de ler/decodificar.
+
+
+def read_skill_bytes(skill_path: Path, repo_root: Path) -> bytes:
+    """Abre cada componente sem seguir symlinks, inclusive diretórios pais."""
+    relative = skill_path.relative_to(repo_root)
+    directory = os.open(repo_root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        for part in relative.parts[:-1]:
+            child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory)
+            os.close(directory)
+            directory = child
+        descriptor = os.open(relative.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
+        with os.fdopen(descriptor, 'rb') as source:
+            info = os.fstat(source.fileno())
+            if not stat.S_ISREG(info.st_mode):
+                raise ValueError('SKILL.md precisa ser arquivo regular, sem symlink')
+            if info.st_size > MAX_SKILL_BYTES:
+                raise ValueError('SKILL.md excede o limite total de 4 MB')
+            data = source.read(MAX_SKILL_BYTES + 1)
+            if len(data) > MAX_SKILL_BYTES:
+                raise ValueError('SKILL.md excede o limite total de 4 MB')
+            return data
+    finally:
+        os.close(directory)
 
 
 def check_skill_file(skill_path: Path, repo_root: Path, strict_links: bool = False):
@@ -33,8 +59,8 @@ def check_skill_file(skill_path: Path, repo_root: Path, strict_links: bool = Fal
     warnings = []
 
     try:
-        raw_bytes = skill_path.read_bytes()
-    except OSError as e:
+        raw_bytes = read_skill_bytes(skill_path, repo_root)
+    except (OSError, ValueError) as e:
         return [f"Erro de I/O ao ler arquivo: {e}"], []
 
     try:
@@ -43,18 +69,20 @@ def check_skill_file(skill_path: Path, repo_root: Path, strict_links: bool = Fal
         return ["Arquivo não está codificado em UTF-8 válido"], []
 
     # 1. Checagem de Frontmatter
-    if not content.startswith("---"):
+    lines = content.splitlines(keepends=True)
+    if not lines or lines[0].rstrip('\r\n') != '---':
         errors.append("Frontmatter ausente (o arquivo deve começar com '---')")
         return errors, warnings
 
-    parts = content.split("---", 2)
-    if len(parts) < 3:
+    closing = next((i for i in range(1, len(lines)) if lines[i].rstrip('\r\n') == '---'), None)
+    if closing is None:
         errors.append("Frontmatter malformado (não fecha com '---')")
         return errors, warnings
 
-    fm_raw = parts[1]
+    fm_raw = ''.join(lines[1:closing])
     if len(fm_raw.encode("utf-8")) > MAX_FRONTMATTER_BYTES:
         errors.append(f"Frontmatter excede o limite máximo de {MAX_FRONTMATTER_BYTES // 1024} KB")
+        return errors, warnings
 
     if yaml is not None:
         try:
@@ -93,8 +121,18 @@ def check_skill_file(skill_path: Path, repo_root: Path, strict_links: bool = Fal
                 warnings.append(msg)
             continue
 
-        # Resolver caminho relativo
-        target_path = (skill_dir / link_clean).resolve()
+        # Violações de fronteira são sempre erros, mesmo sem --strict-links.
+        if Path(link_clean).is_absolute():
+            errors.append(f"Link absoluto proibido: '[{label}]({link})'")
+            continue
+        try:
+            target_path = (skill_dir / link_clean).resolve()
+            if not target_path.is_relative_to(repo_root):
+                errors.append(f"Link fora do repositório: '[{label}]({link})'")
+                continue
+        except (OSError, RuntimeError, ValueError):
+            errors.append(f"Não foi possível resolver link com segurança: '[{label}]({link})'")
+            continue
         if not target_path.exists():
             msg = f"Link relativo quebrado: '[{label}]({link})' -> destino não encontrado"
             if strict_links:
