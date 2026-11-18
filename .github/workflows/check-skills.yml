@@ -1,0 +1,49 @@
+name: Validação de Estrutura das Skills (CI)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '0*/**'
+      - 'scripts/check_skills.py'
+      - '.github/workflows/check-skills.yml'
+  push:
+    branches: [main]
+    paths:
+      - '0*/**'
+      - 'scripts/check_skills.py'
+      - '.github/workflows/check-skills.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-skills-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-structure:
+    name: validate-structure
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Configurar Python
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Executar Validador Estrutural de Skills
+        run: |
+          python scripts/check_skills.py --root . --github-summary
