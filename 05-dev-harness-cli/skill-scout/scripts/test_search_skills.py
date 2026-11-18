@@ -4,7 +4,6 @@ import contextlib
 import datetime
 import io
 import json
-import os
 import stat
 import sys
 import tempfile
@@ -348,9 +347,9 @@ class Cli(unittest.TestCase):
         class Proc:
             returncode, stdout = 0, "gh version 2.40.0 (2024)\n"
         lines = ss.check_environment(FakeClient(has_gh=True), runner=lambda *a, **k: Proc())
-        self.assertTrue(any(l.startswith("gh: 2.40.0") for l in lines))
-        self.assertTrue(any("autenticado: sim" in l for l in lines))
-        self.assertTrue(any("não encontrado" in l for l in ss.check_environment(FakeClient(has_gh=False))))
+        self.assertTrue(any(linha.startswith("gh: 2.40.0") for linha in lines))
+        self.assertTrue(any("autenticado: sim" in linha for linha in lines))
+        self.assertTrue(any("não encontrado" in linha for linha in ss.check_environment(FakeClient(has_gh=False))))
 
     def test_external_search_without_gh_is_reported_not_fatal(self):
         code, out, _ = self.run_cli("pdf", "--external", client=FakeClient(has_gh=False))
@@ -367,7 +366,9 @@ class Atualizacao(unittest.TestCase):
             {"id": "a-um", "name": "um", "owner": "a", "url": "https://github.com/a/um", "type": "community", "description": "d"},
             {"id": "b-dois", "name": "dois", "owner": "b", "url": "https://github.com/b/dois", "type": "community", "description": "d"},
         ]
-        sk = lambda desc: f"---\nname: x\ndescription: {desc}\n---\n".encode()
+        def sk(desc):
+            return f"---\nname: x\ndescription: {desc}\n---\n".encode()
+
         self.client = FakeClient({
             "a/um": {"skills/alfa/SKILL.md": sk("Primeira skill"), "skills/beta/SKILL.md": b"---\nname: beta\n---\n", "skills/beta/README.md": b"# Beta\n\nResumo do README.\n",
                      "skills/sem-skill/README.md": b"x"},
